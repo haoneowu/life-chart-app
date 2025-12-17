@@ -1,0 +1,37 @@
+# Speckit Constitution
+
+This document establishes the core principles and standards for the Life Chart project. All contributors must adhere to these guidelines to ensure code quality, reliability, consistency, and performance.
+
+## 1. Code Quality
+
+*   **Readability First**: Code should be written for humans to read, not just for machines to execute. Use meaningful variable and function names.
+*   **DRY (Don't Repeat Yourself)**: Abstract common logic into reusable functions or components to avoid duplication.
+*   **KISS (Keep It Simple, Stupid)**: Avoid over-engineering. Prefer simple, understandable solutions over complex ones unless necessary.
+*   **Linting & Formatting**: strict adherence to the project's linting (e.g., ESLint) and formatting (e.g., Prettier) rules is mandatory. check code before committing.
+*   **Type Safety**: Use TypeScript (if applicable) or strict type checking to catch errors early. Avoid `any` types.
+*   **Comments & Documentation**: Comment 'why' not 'what'. Public APIs and complex logic must be documented.
+
+## 2. Testing Standards
+
+*   **Coverage Goal**: Aim for high test coverage interactions.
+    *   **Unit Tests**: Test individual functions and components in isolation (e.g., Jest, Vitest).
+    *   **Integration Tests**: Verify that different modules work together correctly.
+    *   **E2E Tests**: Test critical user flows from start to finish (e.g., Playwright, Cypress).
+*   **TDD (Test Driven Development)**: Encouraged for complex logic. Write the test cases before the implementation.
+*   **Regression Prevention**: All bug fixes must include a reproduction test case to prevent regression.
+
+## 3. User Experience (UX) Consistency
+
+*   **Design System Compliance**: Strict adherence to the established design system (colors, typography, spacing, components). ensure a cohesive look and feel.
+*   **Responsiveness**: The application must be fully responsive and functional across all device sizes (Mobile, Tablet, Desktop).
+*   **Accessibility (a11y)**: Follow WCAG guidelines. Ensure keyboard navigation, screen reader support, and proper contrast ratios.
+*   **Performance as UX**: Slow interactions break flow. Optimize for perceived performance (loaders, skeletons, optimistic UI).
+*   **Error Handling**: Provide clear, user-friendly error messages. Never show raw stack traces to the user.
+
+## 4. Performance Requirements
+
+*   **Core Vitals**: Target excellent Web Vitals scores (LCP, FID, CLS).
+*   **Load Time**: Initial load should be fast. optimize bundle sizes (tree-shaking, code splitting).
+*   **Asset Optimization**: Images and media must be optimized and lazy-loaded where appropriate.
+*   **Efficiency**: Minimize re-renders in frontend frameworks. Avoid blocking the main thread.
+*   **API Performance**: Backend endpoints should respect response time budgets (e.g., < 200ms for standard requests).
