@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/haoneowu/Life-Chart/issues"
   },
-  "homepage": "https://github.com/haoneowu/Life-Chart#readme"
+  "homepage": "https://github.com/haoneowu/Life-Chart#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.57.0"
+  }
 }
