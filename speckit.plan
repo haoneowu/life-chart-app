@@ -1,0 +1,37 @@
+# Speckit: Plan (Implementation Strategy)
+
+## Phase 1: Project Setup & Infrastructure
+**Goal**: Initialize the repository and connect to cloud services.
+- [ ] Initialize Next.js project with TypeScript and Tailwind.
+- [ ] Configure ESLint, Prettier.
+- [ ] Set up Supabase project (Auth, Database).
+- [ ] Configure environment variables.
+- [ ] Set up Playwright for E2E testing.
+
+## Phase 2: Core Components & Layout
+**Goal**: Build the static UI for the Life Chart.
+- [ ] Create layout wrapper (Header, Main, Footer).
+- [ ] Implement `LifeGrid` component (rendering 90 years of weeks).
+- [ ] Implement `WeekBox` component (individual week representation).
+- [ ] Optimize grid rendering (check performance).
+
+## Phase 3: Authentication & User Onboarding
+**Goal**: Allow users to sign up and set their birth date.
+- [ ] Implement Supabase Auth (Sign Up, Login, Logout).
+- [ ] Create Onboarding flow (Input birth date).
+- [ ] Save user profile (`birth_date`) to database.
+
+## Phase 4: Data Interaction (CRUD)
+**Goal**: Enable adding notes and eras.
+- [ ] Design Database Schema (SQL migration).
+- [ ] Implement RLS policies.
+- [ ] Create "Week Detail" modal/slide-over.
+- [ ] Implement Add/Edit Note functionality.
+- [ ] Implement Eras management (Add/Edit Eras).
+
+## Phase 5: Polishing & Deployment
+**Goal**: Finalize UX and ship.
+- [ ] Add Dark Mode toggle.
+- [ ] Implement responsive styles for mobile.
+- [ ] Run full E2E test suite.
+- [ ] Deploy to Vercel production.

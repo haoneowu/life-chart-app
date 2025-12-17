@@ -1,0 +1,53 @@
+# Speckit: Specify (Technical Specification)
+
+## 1. Product Overview
+**Life Chart** is a web application that visualizes a user's life in weeks to provide perspective and aid in planning. It serves as a visual memento mori and a high-level life planner.
+
+## 2. Core Features (User Stories)
+- **Authentication**: Users can sign up and log in using Email/Password or Social providers via Supabase Auth.
+- **Life Grid**: Users view a 90-year grid of weeks (rows=years, cols=weeks).
+- **Week Interaction**: Users can click a week to add notes, assign a category/color, and view details.
+- **Eras Management**: Users can define life stages (Eras) which color-code ranges of weeks.
+- **Data Persistence**: All changes are saved to a PostgreSQL database (Supabase).
+- **Responsiveness**: Fully usable on desktop and mobile devices.
+
+## 3. Data Model (Schema)
+
+### `users` (Managed by Supabase Auth)
+- `id`: UUID (Primary Key, refs auth.users)
+- `email`: String
+- `birth_date`: Date
+- `created_at`: Timestamp
+
+### `eras`
+- `id`: UUID (Primary Key)
+- `user_id`: UUID (Foreign Key -> users.id)
+- `label`: String (e.g., "College")
+- `start_date`: Date
+- `end_date`: Date
+- `color`: String (Hex code)
+- `created_at`: Timestamp
+
+### `weeks` (Sparse - only stored if modified)
+- `id`: UUID (Primary Key)
+- `user_id`: UUID (Foreign Key -> users.id)
+- `start_date`: Date (Identifies the week)
+- `notes`: Text
+- `category`: String (Optional override)
+- `color`: String (Optional override)
+- `created_at`: Timestamp
+
+## 4. Technical Stack
+- **Frontend**: Next.js 14+ (App Router), TypeScript, Tailwind CSS, Shadcn/UI (optional but recommended for components).
+- **Backend**: Supabase (PostgreSQL, Auth, RLS Policies).
+- **State Management**: React Query (TanStack Query) for server state; React Context/Zustand for local UI state.
+- **Testing**: Playwright (E2E), Vitest (Unit).
+- **Deployment**: Vercel (Frontend), Supabase (Backend).
+
+## 5. Security & Privacy
+- **RLS (Row Level Security)**: Strict policies to ensure users can only CRUD their own data.
+- **Inputs**: Zod validation for all form inputs.
+
+## 6. UX/UI Guidelines
+- **Theme**: Minimalist. Light/Dark mode.
+- **Grid Performance**: Use CSS Grid; consider virtualization if DOM size exceeds 5000 elements significantly affecting performance (though 4680 divs is usually manageable with modern React).
