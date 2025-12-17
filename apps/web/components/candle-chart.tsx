@@ -1,6 +1,6 @@
 'use client';
 
-import { createChart, ColorType, IChartApi, ISeriesApi, CandlestickData } from 'lightweight-charts';
+import { createChart, ColorType, IChartApi, ISeriesApi, CandlestickData, CandlestickSeries } from 'lightweight-charts';
 import React, { useEffect, useRef } from 'react';
 
 export interface MomentumData {
@@ -34,7 +34,7 @@ export const CandleChart: React.FC<CandleChartProps> = ({ data }) => {
       height: 400,
     });
 
-    const series = chart.addCandlestickSeries({
+    const series = chart.addSeries(CandlestickSeries, {
       upColor: '#22c55e', // Green-500
       downColor: '#ef4444', // Red-500
       borderVisible: false,
