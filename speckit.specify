@@ -1,53 +1,66 @@
 # Speckit: Specify (Technical Specification)
 
 ## 1. Product Overview
-**Life Chart** is a web application that visualizes a user's life in weeks to provide perspective and aid in planning. It serves as a visual memento mori and a high-level life planner.
+**Life Chart** is a viral "Astrology Momentum" application that visualizes a user's life using financial market metaphors. It treats life as a market, fortune/luck as "Momentum," and time as "Candlesticks."
+**Tagline:** "This is not astrology. It’s a chart for your life momentum."
 
 ## 2. Core Features (User Stories)
-- **Authentication**: Users can sign up and log in using Email/Password or Social providers via Supabase Auth.
-- **Life Grid**: Users view a 90-year grid of weeks (rows=years, cols=weeks).
-- **Week Interaction**: Users can click a week to add notes, assign a category/color, and view details.
-- **Eras Management**: Users can define life stages (Eras) which color-code ranges of weeks.
-- **Data Persistence**: All changes are saved to a PostgreSQL database (Supabase).
-- **Responsiveness**: Fully usable on desktop and mobile devices.
+- **Input (Onboarding)**:
+    - User enters Birth Date (Required), Birth Time (Optional, default 12:00), and Birth Place (City).
+    - System converts location to Lat/Lon/Timezone.
+- **Life Candles Chart (Main View)**:
+    - **Visual**: Financial candlestick chart (Green/Red candles) representing life momentum.
+    - **X-Axis**: Time (Day/Month/Year). Default: Daily view (Last 90 days).
+    - **Y-Axis**: Momentum Score (0-100).
+    - **Indicators**: "Today" is highlighted.
+- **Interpretation (Detail View)**:
+    - Click a candle to see: Momentum (Trend), Volatility (Low/Med/High), Signal Tags (e.g., "Communication", "Finance"), and One-line Advice.
+    - Interpretation text generated via LLM (cached).
+- **Sharing (Viral Loop)**:
+    - "Share Today's Candle" generates a shareable image/card with the chart and interpretation.
 
 ## 3. Data Model (Schema)
 
-### `users` (Managed by Supabase Auth)
-- `id`: UUID (Primary Key, refs auth.users)
-- `email`: String
+### `users`
+- `id`: UUID (Primary Key, Supabase Auth)
 - `birth_date`: Date
+- `birth_time`: Time (nullable)
+- `birth_city`: String
+- `latitude`: Float
+- `longitude`: Float
+- `timezone`: String (IANA)
 - `created_at`: Timestamp
 
-### `eras`
-- `id`: UUID (Primary Key)
-- `user_id`: UUID (Foreign Key -> users.id)
-- `label`: String (e.g., "College")
-- `start_date`: Date
-- `end_date`: Date
-- `color`: String (Hex code)
+### `daily_signals` (Cached Calculations)
+- `user_id`: UUID (FK)
+- `date`: Date
+- `momentum_score`: Integer (0-100)
+- `volatility`: Enum ('calm', 'dynamic', 'intense')
+- `signal_tags`: Array<String>
+- `algo_version`: String
+- `created_at`: Timestamp
+- **Unique Index**: `(user_id, date, algo_version)`
+
+### `interpretations` (LLM Cache)
+- `signal_id`: UUID (FK -> daily_signals.id)
+- `content`: JSON (Structured interpretation)
 - `created_at`: Timestamp
 
-### `weeks` (Sparse - only stored if modified)
-- `id`: UUID (Primary Key)
-- `user_id`: UUID (Foreign Key -> users.id)
-- `start_date`: Date (Identifies the week)
-- `notes`: Text
-- `category`: String (Optional override)
-- `color`: String (Optional override)
-- `created_at`: Timestamp
+## 4. Tech Stack
+- **Frontend**: Next.js 14+ (App Router), Tailwind CSS, Framer Motion.
+- **Charting**: `lightweight-charts` (TradingView style).
+- **Backend (API)**: Node.js (deployed on Railway).
+    - **Astrology Engine**: `astronomy-engine` (MIT License) - *Critical: No GPL libraries*.
+    - **LLM Integration**: OpenAI/Gemini API for generating interpretations.
+- **Database**: Supabase (PostgreSQL).
+- **Deployment**: Vercel (Frontend), Railway (Backend Service).
 
-## 4. Technical Stack
-- **Frontend**: Next.js 14+ (App Router), TypeScript, Tailwind CSS, Shadcn/UI (optional but recommended for components).
-- **Backend**: Supabase (PostgreSQL, Auth, RLS Policies).
-- **State Management**: React Query (TanStack Query) for server state; React Context/Zustand for local UI state.
-- **Testing**: Playwright (E2E), Vitest (Unit).
-- **Deployment**: Vercel (Frontend), Supabase (Backend).
-
-## 5. Security & Privacy
-- **RLS (Row Level Security)**: Strict policies to ensure users can only CRUD their own data.
-- **Inputs**: Zod validation for all form inputs.
+## 5. System Architecture
+- **Computation Layer**: Deterministic. Uses `astronomy-engine` to calculate planetary transits vs. natal positions.
+- **Abstraction Layer**: Converts astrological angles into "Momentum" (0-100) and "Volatility".
+- **Presentation Layer**: Renders these values as financial charts.
 
 ## 6. UX/UI Guidelines
-- **Theme**: Minimalist. Light/Dark mode.
-- **Grid Performance**: Use CSS Grid; consider virtualization if DOM size exceeds 5000 elements significantly affecting performance (though 4680 divs is usually manageable with modern React).
+- **Theme**: Financial/Trading App aesthetic (Dark mode default).
+- **Tone**: "Market", "Signal", "Momentum". No "Zodiac" or "Magic" jargon.
+- **Performance**: Instant chart rendering; Optimistic UI for switching timeframes.

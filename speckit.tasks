@@ -1,37 +1,37 @@
 # Speckit: Tasks
 
 ## Setup
-- [ ] Run `npx create-next-app@latest life-chart --typescript --tailwind --eslint` (or similar command).
-- [ ] Install dependencies: `@supabase/supabase-js`, `@tanstack/react-query`, `lucide-react`, `clsx`, `tailwind-merge`.
-- [ ] Install dev dependencies: `@playwright/test`, `prettier`, `prettier-plugin-tailwindcss`.
-- [ ] Initialize Supabase project locally or link to remote.
-- [ ] Create `.env.local` with `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+- [ ] Initialize Git Monorepo: `apps/web` (Next.js) and `apps/api` (Node.js).
+- [ ] Install dependencies: `astronomy-engine`, `lightweight-charts`, `framer-motion`, `lucide-react`, `clsx`, `tailwind-merge`.
+- [ ] Configure `apps/api`: Setup Express or Fastify server.
+- [ ] Configure Supabase: Create project and get credentials.
 
-## Database (Supabase)
-- [ ] Run SQL: Create `public.users` table with `birth_date`.
-- [ ] Run SQL: Create `public.weeks` table (id, user_id, start_date, notes, etc.).
-- [ ] Run SQL: Create `public.eras` table (id, user_id, label, start_date, end_date, color).
-- [ ] Run SQL: Enable RLS on all tables.
-- [ ] Run SQL: Create policies "Users can only select/insert/update/delete their own data".
+## Backend (Calculation Engine)
+- [ ] Create `apps/api/src/engine/astronomy.ts`: Wrapper for `astronomy-engine`.
+- [ ] Implement `calculateNatalChart(date, lat, lon)`: Returns planetary positions.
+- [ ] Implement `calculateTransits(date)`: Returns daily planetary positions.
+- [ ] Implement `calculateMomentum(natal, transits)`: Logic to compute 0-100 Score and Volatility.
+- [ ] **Test**: Write unit tests for `calculateMomentum` to ensure deterministic output.
 
-## Frontend - Core
-- [ ] Create `components/ui` folder.
-- [ ] Create `LifeGrid.tsx`: Calculate weeks since birth. Render grid.
-- [ ] Create `WeekBox.tsx`: Accept props (status: past/present/future, color).
-- [ ] Implement `utils/dateHelpers.ts`: Helper functions to calculate weeks between dates.
+## Database
+- [ ] SQL: Create `public.users` table with `latitude`, `longitude`, `timezone`.
+- [ ] SQL: Create `public.daily_signals` table (Composite key: user_id + date).
+- [ ] SQL: Create `public.interpretations` table.
 
-## Frontend - Auth
-- [ ] Create `app/login/page.tsx`: Login form.
-- [ ] Create `app/auth/callback/route.ts`: Handle OAuth callback (if used) or session exchange.
-- [ ] Create `components/AuthButton.tsx`.
+## Frontend (Chart & UI)
+- [ ] Component `LifeChart`: Initialize `lightweight-charts` instance.
+- [ ] Helper `transformToCandles(signals)`: Convert Momentum Score -> OHLC data (Open/High/Low/Close simulation).
+- [ ] Component `TimeframeSelector`: Toggle Day/Month/Year.
+- [ ] Component `OnboardingForm`: Input birth details. Use a mapping library or simple API for City -> Lat/Lon lookup.
 
-## Frontend - Features
-- [ ] Create `WeekDetailModal.tsx`: Dialog to edit week info.
-- [ ] Connect `WeekDetailModal` to Supabase `weeks` table (fetch/upsert).
-- [ ] Create `Onboarding.tsx`: Force user to enter birth date if missing.
+## API Integration
+- [ ] **API Endpoint** `POST /chart`: Accepts `{ birth_data, range }`. Returns `[candles]`.
+- [ ] **API Endpoint** `GET /interpretation`: Accepts `{ signal_data }`. Checks cache -> Calls LLM -> Returns text.
 
-## Testing & Deploy
-- [ ] Write `tests/auth.spec.ts`: Verify login flow.
-- [ ] Write `tests/grid.spec.ts`: Verify grid renders correct number of weeks.
-- [ ] Configure `vercel.json` (if needed).
-- [ ] Push to GitHub.
+## Virality
+- [ ] Component `ShareCard`: Visual representation of "Today's Candle".
+- [ ] Function `generateShareImage()`: Export component as PNG.
+
+## Deploy
+- [ ] Configure `railway.json` for `apps/api`.
+- [ ] Configure `vercel.json` for `apps/web`.

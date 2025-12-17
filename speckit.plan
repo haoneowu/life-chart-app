@@ -1,37 +1,33 @@
 # Speckit: Plan (Implementation Strategy)
 
-## Phase 1: Project Setup & Infrastructure
-**Goal**: Initialize the repository and connect to cloud services.
-- [ ] Initialize Next.js project with TypeScript and Tailwind.
-- [ ] Configure ESLint, Prettier.
-- [ ] Set up Supabase project (Auth, Database).
-- [ ] Configure environment variables.
-- [ ] Set up Playwright for E2E testing.
+## Phase 1: Infrastructure & Core Engine
+**Goal**: Set up the repo and the deterministic calculation engine.
+- [ ] Initialize Monorepo structure (Frontend + Backend).
+- [ ] **Backend**: Implement `NatalCalculator` using `astronomy-engine`.
+- [ ] **Backend**: Implement `TransitCalculator` and `MomentumScorer` (The proprietary algorithm).
+- [ ] Verify calculation outputs (Unit Tests).
 
-## Phase 2: Core Components & Layout
-**Goal**: Build the static UI for the Life Chart.
-- [ ] Create layout wrapper (Header, Main, Footer).
-- [ ] Implement `LifeGrid` component (rendering 90 years of weeks).
-- [ ] Implement `WeekBox` component (individual week representation).
-- [ ] Optimize grid rendering (check performance).
+## Phase 2: Frontend & Visualization
+**Goal**: Render the "Life Candle" chart.
+- [ ] **Frontend**: Initialize Next.js with Tailwind.
+- [ ] Integrate `lightweight-charts`.
+- [ ] Build the `CandleChart` component (adapt momentum data to OHLC format).
+- [ ] Implement "Day", "Month", "Year" timeframe switching.
 
-## Phase 3: Authentication & User Onboarding
-**Goal**: Allow users to sign up and set their birth date.
-- [ ] Implement Supabase Auth (Sign Up, Login, Logout).
-- [ ] Create Onboarding flow (Input birth date).
-- [ ] Save user profile (`birth_date`) to database.
+## Phase 3: User Onboarding & Data
+**Goal**: Connect real user birth data to the engine.
+- [ ] **Database**: Design Supabase schema (`users`, `daily_signals`).
+- [ ] **Frontend**: Build Onboarding Flow (Date/Time/Location picker).
+- [ ] **Backend**: API endpoint to receive user data -> Compute 90-day history -> Return chart data.
 
-## Phase 4: Data Interaction (CRUD)
-**Goal**: Enable adding notes and eras.
-- [ ] Design Database Schema (SQL migration).
-- [ ] Implement RLS policies.
-- [ ] Create "Week Detail" modal/slide-over.
-- [ ] Implement Add/Edit Note functionality.
-- [ ] Implement Eras management (Add/Edit Eras).
+## Phase 4: Interpretation & LLM
+**Goal**: Add the "Story" layer.
+- [ ] **Backend**: Integrate LLM (Gemini/OpenAI) to generate text based on signal tags.
+- [ ] **Frontend**: Build "Candle Detail" modal (BottomSheet on mobile).
+- [ ] Implement caching for LLM responses to save costs.
 
-## Phase 5: Polishing & Deployment
-**Goal**: Finalize UX and ship.
-- [ ] Add Dark Mode toggle.
-- [ ] Implement responsive styles for mobile.
-- [ ] Run full E2E test suite.
-- [ ] Deploy to Vercel production.
+## Phase 5: Virality & Polish
+**Goal**: Optimize for sharing and launch.
+- [ ] **Frontend**: Create "Share Card" generator (Canvas or HTML-to-Image).
+- [ ] **UI**: Polish animations (Framer Motion) for "Cinematic" feel.
+- [ ] **Deploy**: Production deploy to Vercel and Railway.
