@@ -1,18 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-
-dotenv.config();
-
-const app = express();
-const port = process.env.PORT || 3001;
-
-app.use(cors());
-app.use(express.json());
-
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
 import { AstronomyEngine, ChartSnapshot } from './engine/astronomy';
 import { MomentumEngine } from './engine/momentum';
 
@@ -49,11 +37,7 @@ app.post('/chart', (req, res) => {
     // Parse Birth Date
     // Note: birthTime default 12:00 if missing
     const timeStr = birthTime || '12:00';
-    const birthDateTime = new Date(`${birthDate}T${timeStr}:00Z`); // Treating input as UTC for simplicity or need timezone offset? 
-    // Ideally we need timezone. For MVP, assuming UTC or approximating is common.
-    // PRD says "System converts location to Lat/Lon/Timezone".
-    // If we receive Lat/Lon, we might still need Timezone to get exact UTC birth time.
-    // Let's assume the frontend sends a simplified UTC ISO string or we just parse as UTC.
+    const birthDateTime = new Date(`${birthDate}T${timeStr}:00Z`); // Treating input as UTC for simplicity
     
     const natalChart: ChartSnapshot = {
       date: birthDateTime,
@@ -89,4 +73,3 @@ app.post('/chart', (req, res) => {
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
-
