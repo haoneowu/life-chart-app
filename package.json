@@ -1,27 +1,14 @@
 {
-  "name": "life-chart",
+  "name": "life-chart-monorepo",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs"
-  },
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/haoneowu/Life-Chart.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/haoneowu/Life-Chart/issues"
-  },
-  "homepage": "https://github.com/haoneowu/Life-Chart#readme",
   "devDependencies": {
-    "@playwright/test": "^1.57.0"
+    "@playwright/test": "^1.40.0"
   }
 }
