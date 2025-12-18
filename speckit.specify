@@ -6,23 +6,21 @@
 
 ## 2. Core Features (User Stories)
 - **Input (Onboarding)**:
-    - **Fields**: Name (Required), Gender (Optional), Birth Date (Required), Birth Time (Optional), Birth Place.
-    - **Visuals**: "Starfield" background (Particles.js, Zodiac constellations floating, shooting stars).
-    - **UI**: Glassmorphism input panel. Hero button with high-energy gradients and animation.
+    - **Fields**: Name (Required), Gender (Optional), Birth Date (Required), Birth Hour/Minute (Required), Birth Place (City Search).
+    - **Visuals**: "Starfield" background (Particles.js, constellations floating).
+    - **UI**: 50/50 Horizontal Split layout on desktop. Hero button with high-energy animated gradients.
     - System converts location to Lat/Lon/Timezone.
 - **Life Candles Chart (Main View)**:
-    - **Header**: Identity section with Zodiac Avatar (SVG), Name, and Sun Sign.
-    - **Details**: Collapsible table showing planetary positions (Sun, Moon, etc.).
+    - **Header**: Identity section with Zodiac Avatar (PNG), Name, Birth Date/Time/Place. Collapsible planetary details.
     - **Chart Area**:
-        - **Visual**: Financial candlestick chart (Green/Red).
+        - **Visual**: Financial candlestick chart (Green/Red), TradingView logo hidden.
         - **Y-Axis**: Momentum Score (0-100).
         - **X-Axis**: Time (Day/Month/Year).
-        - **Interactions**: Click to open panel, Pan/Zoom, "Back to Today".
-        - **Granularity**: Switch between Day (90d), Month (24m), Year (10y).
-    - **Indicators**: "Today" is highlighted.
-- **Interpretation (Detail View)**:
-    - Click a candle to see: Momentum (Trend), Volatility (Low/Med/High), Signal Tags (e.g., "Communication", "Finance"), and One-line Advice.
-    - Interpretation text generated via LLM (cached).
+        - **Interactions**: Scroll/Drag, Click to open panel, Back to Today button.
+        - **Pillars**: Unified toggle for 5 Life Pillars (Overall, Career, Money, Relationships, Energy).
+    - **Interpretation (Detail View)**:
+    - Click a candle to see: "Why" (Influences), "What" (Themes), "When" (Windows), and "How" (Advice).
+    - Interpretation text using structured narrative logic.
 - **Sharing (Viral Loop)**:
     - "Share Today's Candle" generates a shareable image/card with the chart and interpretation.
 
@@ -54,11 +52,9 @@
 - `created_at`: Timestamp
 
 ## 4. Tech Stack
-- **Frontend**: Next.js 14+ (App Router), Tailwind CSS, Framer Motion.
-- **Charting**: `lightweight-charts` (TradingView style).
-- **Backend (API)**: Node.js (deployed on Railway).
-    - **Astrology Engine**: `astronomy-engine` (MIT License) - *Critical: No GPL libraries*.
-    - **LLM Integration**: OpenAI/Gemini API for generating interpretations.
+- **Frontend**: Next.js 15+ (App Router), Tailwind CSS v4, Framer Motion.
+- **Typography**: Cormorant Garamond (Display), Space Mono (Data), Inter (Body).
+- **Charting**: `lightweight-charts`.
 - **Database**: Supabase (PostgreSQL).
 - **Deployment**: Vercel (Frontend), Railway (Backend Service).
 

@@ -23,22 +23,23 @@ interface ChartRequest {
   lon: number;
   startDate?: string; // Defaults to today - 45 days
   days?: number; // Defaults to 90
+  pillar?: string; // Overall, Career, etc.
 }
 
 app.post('/chart', (req, res) => {
   try {
-    const { birthDate, birthTime, lat, lon, startDate, days = 90 } = req.body as ChartRequest;
+    const { birthDate, birthTime, lat, lon, startDate, days = 90, pillar = 'Overall' } = req.body as ChartRequest;
 
     if (!birthDate || lat === undefined || lon === undefined) {
-       res.status(400).json({ error: 'Missing required fields: birthDate, lat, lon' });
-       return;
+      res.status(400).json({ error: 'Missing required fields: birthDate, lat, lon' });
+      return;
     }
 
     // Parse Birth Date
     // Note: birthTime default 12:00 if missing
     const timeStr = birthTime || '12:00';
     const birthDateTime = new Date(`${birthDate}T${timeStr}:00Z`); // Treating input as UTC for simplicity
-    
+
     const natalChart: ChartSnapshot = {
       date: birthDateTime,
       planets: AstronomyEngine.getPlanetaryPositions(birthDateTime),
@@ -60,7 +61,7 @@ app.post('/chart', (req, res) => {
       });
     }
 
-    const momentumSeries = MomentumEngine.calculateSeries(natalChart, dailyTransits);
+    const momentumSeries = MomentumEngine.calculateSeries(natalChart, dailyTransits, pillar);
 
     res.json(momentumSeries);
 

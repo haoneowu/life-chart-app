@@ -31,10 +31,10 @@ export function Sidebar() {
         <div className="h-20 flex items-center justify-center group-hover:justify-start group-hover:px-4 transition-all overflow-hidden relative">
           <div className="w-10 h-10 shrink-0 relative">
             <Image
-              src="/logo.png"
+              src="/logo.svg"
               alt="Life Chart"
               fill
-              className="object-contain invert" // Invert if black logo on black bg, assume white or use specific class
+              className="object-contain"
               sizes="40px"
             />
           </div>

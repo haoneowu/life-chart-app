@@ -28,16 +28,35 @@ export const CandleChart: React.FC<CandleChartProps> = ({ data, onCandleClick })
         textColor: '#d1d5db',
       },
       grid: {
-        vertLines: { color: '#374151' },
-        horzLines: { color: '#374151' },
+        vertLines: { color: 'rgba(255, 255, 255, 0.05)' },
+        horzLines: { color: 'rgba(255, 255, 255, 0.05)' },
       },
       width: chartContainerRef.current.clientWidth,
-      height: 400,
+      height: 480,
+      timeScale: {
+        borderColor: '#374151',
+        barSpacing: 12,
+        minBarSpacing: 5,
+        rightOffset: 12,
+        fixLeftEdge: false,
+        lockVisibleTimeRangeOnResize: true,
+      },
+      handleScroll: {
+        mouseWheel: true,
+        pressedMouseMove: true,
+        horzTouchDrag: true,
+        vertTouchDrag: true,
+      },
+      handleScale: {
+        axisPressedMouseMove: true,
+        mouseWheel: true,
+        pinch: true,
+      },
     });
 
     const series = chart.addSeries(CandlestickSeries, {
-      upColor: '#22c55e', // Green-500
-      downColor: '#ef4444', // Red-500
+      upColor: '#22c55e',
+      downColor: '#ef4444',
       borderVisible: false,
       wickUpColor: '#22c55e',
       wickDownColor: '#ef4444',

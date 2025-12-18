@@ -21,12 +21,12 @@
 ## Frontend (Chart & UI)
 - [x] Component `LifeChart`: Initialize `lightweight-charts` instance.
 - [x] Helper `transformToCandles(signals)`: Convert Momentum Score -> OHLC data (Open/High/Low/Close simulation).
-- [ ] **Chart Interactions**: Handle clicks on candles -> Show Detail Panel (Slide-over/Modal).
-- [ ] Component `TimeframeSelector`: Toggle Day/Month/Year.
-- [ ] **Revamp**: `OnboardingForm`:
-    - [ ] Add `Name` and `Gender` inputs.
-    - [ ] Replace Lat/Lon input with "City Search" (Autocomplete).
-    - [ ] Split into styled steps or a clean single-page view.
+- [x] **Chart Interactions**: Handle clicks on candles -> Show Detail Panel (Slide-over/Modal).
+- [x] Component `TimeframeSelector`: Toggle Day/Month/Year.
+- [x] **Revamp**: `OnboardingForm`:
+    - [x] Add `Name` and `Gender` inputs.
+    - [x] Replace Lat/Lon input with "City Search" (Autocomplete).
+    - [x] Split into styled steps or a clean single-page view.
     - [x] Add entry animations.
 
 ## Onboarding Refinements (User Feedback)
@@ -57,7 +57,35 @@
     - [x] **Default State**: Open "Day Detail" (selected day) by default upon entry (select "Today" if new).
     - [x] **Visuals**: Replace Zodiac icons with style matching reference (use simple bold SVGs or sprite if possible).
     - [x] **Cleanup**: Hide TradingView logo (via CSS or config).
-    - [x] **Controls**: Segmented control Day/Week/Month (default Day).
+    - [x] **Controls**: Segmented control Day/Month/Year (default Day).
+
+## Refinement Round 5 (Final MVP)
+- [x] **Onboarding (Input Page)**:
+    - [x] **Layout**: Refactor to LG Horizontal Split (Label Left | Input Right) on desktop.
+    - [x] **Inputs**: Add "Birth Hour" and "Birth Minute" (HH:MM) precision.
+    - [x] **Assets**: Replace logo with `logo.svg`.
+- [x] **Navigation (Sidebar)**:
+    - [x] **Logo**: Update Sidebar logo and favicon with `logo.svg`.
+- [x] **Chart Detail Page (Header)**:
+    - [x] **Collapse**: Default planetary details to collapsed.
+    - [x] **Identity**: Replace planetary summary with User Birth Info (Time, Place).
+    - [x] **Cleanup**: Remove "Momentum: Active" text.
+    - [x] **Icons**: Replace all Zodiac icons with provided individual PNG assets.
+- [x] **Advanced Charting (K-Line)**:
+    - [x] **Clean Up**: Implementation of CSS hack to hide TradingView logo.
+    - [x] **Interactivity**: Enable historical dragging and ensure smooth scaling.
+    - [x] **Selection**: Ensure a candle is selected on landing; persistent selection state.
+    - [x] **Timeframes**: Remove 'Week', implement 'Day', 'Month', 'Year'.
+    - [x] **Pillars**: Wire up the 5 Life Pillars (Overall, Career, Money, Relationships, Energy). 
+    - [x] **State Machine**: Implement selection logic and panel persistence when switching timeframes.
+- [x] **Detail Panel (Right Side)**:
+    - [x] **Typography**: Change body text to Sans-Serif (Inter), increase size to 1.125rem+.
+    - [x] **Navigation**: Add Forward/Backward arrows for sequence browsing.
+    - [x] **Structure**: Restructured into Why, What, When, How categories.
+- [x] **Backend & Logic**:
+    - [x] **Key Date**: Define deterministic logic for Next Key Date flagging.
+    - [x] **Pillars**: Update API to provide variation data (weighted planetary scores) for the 5 Pillars.
+    - [x] **Time Windows**: Implement semantic time windows (Morning/Afternoon/Evening) for interpretation.
 
 ## Refinement Round 3 (Visuals & Data)
 - [x] **Onboarding**:
@@ -84,20 +112,20 @@
 - [x] **Assets**: Add 12 Zodiac SVG icons to `components/icons/zodiac`.
 
 ## Advanced Charting (K-Line Page)
-- [ ] **Backend**: Update `POST /chart` to return `{ chartData, natalDetails: { sun, moon, ... } }`.
+- [x] **Backend**: Update `POST /chart` to return `{ chartData, natalDetails: { sun, moon, ... } }`.
 - [x] **Header**: Create `ChartHeader` component.
     - [x] Display Name, Sun Sign, and Avatar.
     - [x] Collapsible "Planetary Details" table.
-- [ ] **Chart Controls**:
-    - [ ] "Back to Today" floating button.
-    - [ ] Timeframe Segmented Control (Day/Month/Year).
+- [x] **Chart Controls**:
+    - [x] "Back to Today" floating button.
+    - [x] Timeframe Segmented Control (Day/Month/Year).
 - [x] **Detail Panel**:
     - [x] Layout update: Header (Date/Score), Body (Advice), Footer (Share).
     - [x] "Share Card" visual update.
 
 ## Design & Experience Overhaul (Gemini.md)
-- [ ] **Typography**: Install `Cormorant Garamond` (Display) and `Space Mono` (Data). Apply "High Contrast" principle.
-- [ ] **Layout**: Add "Fake" Left Sidebar (Branding, History, Settings) for demo purposes.
+- [x] **Typography**: Install `Cormorant Garamond` (Display), `Space Mono` (Data), and `Inter` (Body). Apply "High Contrast" principle.
+- [x] **Layout**: Add "Fake" Left Sidebar (Branding, History, Settings) for demo purposes.
 - [ ] **Interactions**:
     - [ ] Staggered Text Reveal on load.
     - [ ] Magnetic Buttons or Custom Cursor effect.

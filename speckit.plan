@@ -12,33 +12,33 @@
 - [x] **Frontend**: Initialize Next.js with Tailwind.
 - [x] Integrate `lightweight-charts`.
 - [x] Build the `CandleChart` component (adapt momentum data to OHLC format).
-- [ ] Implement "Day", "Month", "Year" timeframe switching.
+- [x] Implement "Day", "Month", "Year" timeframe switching.
 
 ## Phase 2.5: Design & UX Polish (The "Wow" Factor)
 **Goal**: Elevate the aesthetic to "Premium" and fix UX friction.
-- [ ] **Typography**: Switch to Google Fonts (Cormorant Garamond + Space Mono).
-- [ ] **Navigation**: Add Sidebar for app-like feel.
-- [ ] **Input**: Smart City Search (No more manual Lat/Lon).
-- [ ] **Interactions**: Chart clicking, micro-animations.
+- [x] **Typography**: Switch to Google Fonts (Cormorant Garamond + Space Mono + Inter).
+- [x] **Navigation**: Add Sidebar for app-like feel.
+- [x] **Input**: Smart City Search (No more manual Lat/Lon).
+- [x] **Interactions**: Chart clicking, micro-animations, historical dragging.
 
 ## Phase 3: User Onboarding & Data
 **Goal**: Connect real user birth data to the engine.
-- [ ] **Database**: Design Supabase schema (`users`, `daily_signals`).
-- [ ] **Frontend**: Build Onboarding Flow (Date/Time/Location picker).
-- [ ] **Backend**: API endpoint to receive user data -> Compute 90-day history -> Return chart data.
+- [x] **Database**: Design Supabase schema (`users`, `daily_signals`).
+- [x] **Frontend**: Build Onboarding Flow (Date/Time/Precision Location picker).
+- [x] **Backend**: API endpoint to receive user data -> Compute history -> Return chart data.
 
-## Phase 3: Visual Immersion (The "Galaxy" Feel)
+## Phase 3.5: Visual Immersion (The "Galaxy" Feel)
 **Goal**: Implement the requested "Starfield" aesthetic and glassmorphism.
-- [ ] **Background**: Implement `ParticlesBackground` (Starfield + Constellations + Shooting Stars).
-- [ ] **Onboarding**: Update fields (Name, Gender). Apply Glassmorphism + Gradient Animations to UI.
-- [ ] **Assets**: Create/Import Zodiac SVG tokens.
+- [x] **Background**: Implement `ParticlesBackground` (Starfield + Constellations).
+- [x] **Onboarding**: Update fields (Name, Gender, Hour/Min). Apply LG Split Layout + Glassmorphism.
+- [x] **Assets**: Create/Import Zodiac PNG tokens.
 
-## Phase 4: Advanced Charting & Data
+## Phase 4: Advanced Charting & Data (Final MVP)
 **Goal**: Full implementation of the K-Line PRD.
-- [ ] **Backend**: Update API to return full Planetary Details (Sun, Moon, etc.) for the Header/Details section.
-- [ ] **Frontend**: Build `ChartHeader` (Zodiac Avatar, Collapsible Details).
-- [ ] **Frontend**: Enhance `CandleChart` (Axis formatting, Interactions, Back to Today).
-- [ ] **Frontend**: Upgrade `DetailPanel` (Progressive disclosure, Date formatting, Share Card).
+- [x] **Backend**: Update API to return full Planetary Details and Pillar variations.
+- [x] **Frontend**: Build `ChartHeader` (Zodiac Avatar, Identity Display, Collapsible Details).
+- [x] **Frontend**: Enhance `CandleChart` (Axis formatting, Interactions, Logo Hiding).
+- [x] **Frontend**: Upgrade `DetailPanel` (Progressive disclosure, Why/What/When/How, Nav Arrows).
 
 ## Phase 4: Interpretation & LLM
 **Goal**: Add the "Story" layer.
