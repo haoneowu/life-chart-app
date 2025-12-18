@@ -2,23 +2,43 @@
 
 ## Phase 1: Infrastructure & Core Engine
 **Goal**: Set up the repo and the deterministic calculation engine.
-- [ ] Initialize Monorepo structure (Frontend + Backend).
-- [ ] **Backend**: Implement `NatalCalculator` using `astronomy-engine`.
-- [ ] **Backend**: Implement `TransitCalculator` and `MomentumScorer` (The proprietary algorithm).
-- [ ] Verify calculation outputs (Unit Tests).
+- [x] Initialize Monorepo structure (Frontend + Backend).
+- [x] **Backend**: Implement `NatalCalculator` using `astronomy-engine`.
+- [x] **Backend**: Implement `TransitCalculator` and `MomentumScorer` (The proprietary algorithm).
+- [x] Verify calculation outputs (Unit Tests).
 
 ## Phase 2: Frontend & Visualization
 **Goal**: Render the "Life Candle" chart.
-- [ ] **Frontend**: Initialize Next.js with Tailwind.
-- [ ] Integrate `lightweight-charts`.
-- [ ] Build the `CandleChart` component (adapt momentum data to OHLC format).
+- [x] **Frontend**: Initialize Next.js with Tailwind.
+- [x] Integrate `lightweight-charts`.
+- [x] Build the `CandleChart` component (adapt momentum data to OHLC format).
 - [ ] Implement "Day", "Month", "Year" timeframe switching.
+
+## Phase 2.5: Design & UX Polish (The "Wow" Factor)
+**Goal**: Elevate the aesthetic to "Premium" and fix UX friction.
+- [ ] **Typography**: Switch to Google Fonts (Cormorant Garamond + Space Mono).
+- [ ] **Navigation**: Add Sidebar for app-like feel.
+- [ ] **Input**: Smart City Search (No more manual Lat/Lon).
+- [ ] **Interactions**: Chart clicking, micro-animations.
 
 ## Phase 3: User Onboarding & Data
 **Goal**: Connect real user birth data to the engine.
 - [ ] **Database**: Design Supabase schema (`users`, `daily_signals`).
 - [ ] **Frontend**: Build Onboarding Flow (Date/Time/Location picker).
 - [ ] **Backend**: API endpoint to receive user data -> Compute 90-day history -> Return chart data.
+
+## Phase 3: Visual Immersion (The "Galaxy" Feel)
+**Goal**: Implement the requested "Starfield" aesthetic and glassmorphism.
+- [ ] **Background**: Implement `ParticlesBackground` (Starfield + Constellations + Shooting Stars).
+- [ ] **Onboarding**: Update fields (Name, Gender). Apply Glassmorphism + Gradient Animations to UI.
+- [ ] **Assets**: Create/Import Zodiac SVG tokens.
+
+## Phase 4: Advanced Charting & Data
+**Goal**: Full implementation of the K-Line PRD.
+- [ ] **Backend**: Update API to return full Planetary Details (Sun, Moon, etc.) for the Header/Details section.
+- [ ] **Frontend**: Build `ChartHeader` (Zodiac Avatar, Collapsible Details).
+- [ ] **Frontend**: Enhance `CandleChart` (Axis formatting, Interactions, Back to Today).
+- [ ] **Frontend**: Upgrade `DetailPanel` (Progressive disclosure, Date formatting, Share Card).
 
 ## Phase 4: Interpretation & LLM
 **Goal**: Add the "Story" layer.

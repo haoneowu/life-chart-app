@@ -11,9 +11,10 @@ export interface MomentumData {
 
 interface CandleChartProps {
   data: MomentumData[];
+  onCandleClick?: (data: any) => void;
 }
 
-export const CandleChart: React.FC<CandleChartProps> = ({ data }) => {
+export const CandleChart: React.FC<CandleChartProps> = ({ data, onCandleClick }) => {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
   const seriesRef = useRef<ISeriesApi<"Candlestick"> | null>(null);
@@ -48,14 +49,14 @@ export const CandleChart: React.FC<CandleChartProps> = ({ data }) => {
     // Open = Prev Close (or Score if first)
     // Close = Score
     // Volatility affects Wick length (High/Low)
-    
+
     const candleData: CandlestickData[] = [];
     let prevScore = data.length > 0 ? data[0].score : 50;
 
     data.forEach((d) => {
       const open = prevScore;
       const close = d.score;
-      
+
       let volFactor = 2;
       if (d.volatility === 'dynamic') volFactor = 5;
       if (d.volatility === 'intense') volFactor = 10;
@@ -84,6 +85,13 @@ export const CandleChart: React.FC<CandleChartProps> = ({ data }) => {
     chartRef.current = chart;
     seriesRef.current = series;
 
+    chart.subscribeClick((param) => {
+      if (param.time && param.seriesData.get(series) && onCandleClick) {
+        const dataPoint = param.seriesData.get(series);
+        onCandleClick({ ...dataPoint, time: param.time });
+      }
+    });
+
     const handleResize = () => {
       if (chartContainerRef.current) {
         chart.applyOptions({ width: chartContainerRef.current.clientWidth });
@@ -96,7 +104,7 @@ export const CandleChart: React.FC<CandleChartProps> = ({ data }) => {
       window.removeEventListener('resize', handleResize);
       chart.remove();
     };
-  }, [data]);
+  }, [data, onCandleClick]);
 
   return <div ref={chartContainerRef} className="w-full h-[400px]" />;
 };

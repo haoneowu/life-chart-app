@@ -1,17 +1,17 @@
 # Speckit: Tasks
 
 ## Setup
-- [ ] Initialize Git Monorepo: `apps/web` (Next.js) and `apps/api` (Node.js).
-- [ ] Install dependencies: `astronomy-engine`, `lightweight-charts`, `framer-motion`, `lucide-react`, `clsx`, `tailwind-merge`.
-- [ ] Configure `apps/api`: Setup Express or Fastify server.
-- [ ] Configure Supabase: Create project and get credentials.
+- [x] Initialize Git Monorepo: `apps/web` (Next.js) and `apps/api` (Node.js).
+- [x] Install dependencies: `astronomy-engine`, `lightweight-charts`, `framer-motion`, `lucide-react`, `clsx`, `tailwind-merge`.
+- [x] Configure `apps/api`: Setup Express or Fastify server.
+- [x] Configure Supabase: Create project and get credentials.
 
 ## Backend (Calculation Engine)
-- [ ] Create `apps/api/src/engine/astronomy.ts`: Wrapper for `astronomy-engine`.
-- [ ] Implement `calculateNatalChart(date, lat, lon)`: Returns planetary positions.
-- [ ] Implement `calculateTransits(date)`: Returns daily planetary positions.
-- [ ] Implement `calculateMomentum(natal, transits)`: Logic to compute 0-100 Score and Volatility.
-- [ ] **Test**: Write unit tests for `calculateMomentum` to ensure deterministic output.
+- [x] Create `apps/api/src/engine/astronomy.ts`: Wrapper for `astronomy-engine`.
+- [x] Implement `calculateNatalChart(date, lat, lon)`: Returns planetary positions.
+- [x] Implement `calculateTransits(date)`: Returns daily planetary positions.
+- [x] Implement `calculateMomentum(natal, transits)`: Logic to compute 0-100 Score and Volatility.
+- [x] **Test**: Write unit tests for `calculateMomentum` to ensure deterministic output.
 
 ## Database
 - [ ] SQL: Create `public.users` table with `latitude`, `longitude`, `timezone`.
@@ -19,10 +19,90 @@
 - [ ] SQL: Create `public.interpretations` table.
 
 ## Frontend (Chart & UI)
-- [ ] Component `LifeChart`: Initialize `lightweight-charts` instance.
-- [ ] Helper `transformToCandles(signals)`: Convert Momentum Score -> OHLC data (Open/High/Low/Close simulation).
+- [x] Component `LifeChart`: Initialize `lightweight-charts` instance.
+- [x] Helper `transformToCandles(signals)`: Convert Momentum Score -> OHLC data (Open/High/Low/Close simulation).
+- [ ] **Chart Interactions**: Handle clicks on candles -> Show Detail Panel (Slide-over/Modal).
 - [ ] Component `TimeframeSelector`: Toggle Day/Month/Year.
-- [ ] Component `OnboardingForm`: Input birth details. Use a mapping library or simple API for City -> Lat/Lon lookup.
+- [ ] **Revamp**: `OnboardingForm`:
+    - [ ] Add `Name` and `Gender` inputs.
+    - [ ] Replace Lat/Lon input with "City Search" (Autocomplete).
+    - [ ] Split into styled steps or a clean single-page view.
+    - [x] Add entry animations.
+
+## Onboarding Refinements (User Feedback)
+- [x] **Main Button**: Update gradient to Teal/Red/Orange (Aurora style) per reference.
+- [x] **Subtitle**: Remove background box (clean text).
+- [x] **Background**: Speed up particles (1.2-1.5x) and change bg to subtle deep gradient (not pure black).
+- [x] **Layout**: Stack inputs in a single column (`grid-cols-1`).
+- [x] **Refinement Round 2**:
+    - [x] **Fix**: `CityPicker` dropdown z-index issue (Force `z-50` on picker container, `z-0` on button).
+    - [x] **Button**: Animate gradient (background-size: 200%, animation: pan).
+    - [x] **Layout**: Change Input Box style to **Inline/Horizontal** (Label Left | Input Right).
+    - [x] **Starfield**: Increase particle opacity (0.3 -> 0.8) and line opacity (0.3).
+
+## Refinement Round 4 (User Feedback & bugs)
+- [x] **Global / Bug Fixes**:
+    - [x] **Hydration Error**: Fix `className` mismatch in `CityPicker` input.
+    - [x] **Runtime Crash**: Fix `toFixed` error in `DetailPanel` (undefined check).
+- [x] **Onboarding**:
+    - [x] **Styles**: Fix alignment of Gender/Date dropdowns. Change Date icon color to white.
+    - [x] **CityPicker Logic**: Search should only prompt on input (no default list). Search logic should be fuzzy/better (pinyin support if possible, or just strict matches on input). Hide coordinates.
+- [x] **Navigation (Sidebar)**:
+    - [x] **Assets**: Use `logo.png` (from provided image) for Logo/Favicon.
+    - [x] **Structure**: Remove top-level Settings/Account. Fold into User Profile popover at bottom.
+    - [x] **User Menu**: Add "Language" option in the new User Profile menu.
+    - [x] **Styles**: Center the selected icon. Use `#444444` for active state background (dimmer than white).
+    - [x] **Collapsed**: Ensure Logo Icon is visible when collapsed.
+- [x] **Chart Detail Page**:
+    - [x] **Default State**: Open "Day Detail" (selected day) by default upon entry (select "Today" if new).
+    - [x] **Visuals**: Replace Zodiac icons with style matching reference (use simple bold SVGs or sprite if possible).
+    - [x] **Cleanup**: Hide TradingView logo (via CSS or config).
+    - [x] **Controls**: Segmented control Day/Week/Month (default Day).
+
+## Refinement Round 3 (Visuals & Data)
+- [x] **Onboarding**:
+    - [x] **Button**: Remove outer glow/shadow to fix "strange light".
+    - [x] **CityPicker**: Default empty state (show no prompt), fix text prompt visibility when typing, add Country/State to search result.
+- [x] **Navigation (Sidebar)**:
+    - [x] Remove left black bar indicator for selected item.
+    - [x] **Layout**: Move Settings/User Profile to bottom (ChatGPT style) with Avatar expanded layout.
+- [x] **Chart Detail Page**:
+    - [x] **Auto-Expand**: Ensure K-Line chart opens with panel expanded by default.
+    - [x] **Identity**: Fix Name display (currently showing City). Add "User Brief" (3-4 lines of attributes).
+    - [x] **Planets**: Show ALL planets (Sun to Pluto, excluding asteroids if needed, but fill the list).
+    - [x] **Zodiac Icons**: Crop and use provided Zodiac SVG image for circular avatars.
+- [x] **Chart Area**:
+    - [x] **Clean Up**: Remove TradingView logo (if customizable/authorized) or hide.
+    - [x] **New Chart**: Move "New Chart" button to Sidebar (under logo).
+    - [x] **Timeframe**: Implement Day/Week/Month granularity switch.
+
+## Visuals & Immersion (Particles & Glass)
+- [x] **Background**: Create `ParticlesBackground` component (Canvas/react-particles).
+- [x] **Onboarding UI**:
+    - [x] Implement Glassmorphism panel (backdrop-blur, border gradients).
+    - [x] **Hero Button**: Add energy gradient animation (css keyframes).
+- [x] **Assets**: Add 12 Zodiac SVG icons to `components/icons/zodiac`.
+
+## Advanced Charting (K-Line Page)
+- [ ] **Backend**: Update `POST /chart` to return `{ chartData, natalDetails: { sun, moon, ... } }`.
+- [x] **Header**: Create `ChartHeader` component.
+    - [x] Display Name, Sun Sign, and Avatar.
+    - [x] Collapsible "Planetary Details" table.
+- [ ] **Chart Controls**:
+    - [ ] "Back to Today" floating button.
+    - [ ] Timeframe Segmented Control (Day/Month/Year).
+- [x] **Detail Panel**:
+    - [x] Layout update: Header (Date/Score), Body (Advice), Footer (Share).
+    - [x] "Share Card" visual update.
+
+## Design & Experience Overhaul (Gemini.md)
+- [ ] **Typography**: Install `Cormorant Garamond` (Display) and `Space Mono` (Data). Apply "High Contrast" principle.
+- [ ] **Layout**: Add "Fake" Left Sidebar (Branding, History, Settings) for demo purposes.
+- [ ] **Interactions**:
+    - [ ] Staggered Text Reveal on load.
+    - [ ] Magnetic Buttons or Custom Cursor effect.
+    - [ ] Smooth Chart Entry animation.
+- [ ] **Imagery**: Add high-quality background/accent images from Unsplash.
 
 ## API Integration
 - [ ] **API Endpoint** `POST /chart`: Accepts `{ birth_data, range }`. Returns `[candles]`.

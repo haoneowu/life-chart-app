@@ -6,12 +6,19 @@
 
 ## 2. Core Features (User Stories)
 - **Input (Onboarding)**:
-    - User enters Birth Date (Required), Birth Time (Optional, default 12:00), and Birth Place (City).
+    - **Fields**: Name (Required), Gender (Optional), Birth Date (Required), Birth Time (Optional), Birth Place.
+    - **Visuals**: "Starfield" background (Particles.js, Zodiac constellations floating, shooting stars).
+    - **UI**: Glassmorphism input panel. Hero button with high-energy gradients and animation.
     - System converts location to Lat/Lon/Timezone.
 - **Life Candles Chart (Main View)**:
-    - **Visual**: Financial candlestick chart (Green/Red candles) representing life momentum.
-    - **X-Axis**: Time (Day/Month/Year). Default: Daily view (Last 90 days).
-    - **Y-Axis**: Momentum Score (0-100).
+    - **Header**: Identity section with Zodiac Avatar (SVG), Name, and Sun Sign.
+    - **Details**: Collapsible table showing planetary positions (Sun, Moon, etc.).
+    - **Chart Area**:
+        - **Visual**: Financial candlestick chart (Green/Red).
+        - **Y-Axis**: Momentum Score (0-100).
+        - **X-Axis**: Time (Day/Month/Year).
+        - **Interactions**: Click to open panel, Pan/Zoom, "Back to Today".
+        - **Granularity**: Switch between Day (90d), Month (24m), Year (10y).
     - **Indicators**: "Today" is highlighted.
 - **Interpretation (Detail View)**:
     - Click a candle to see: Momentum (Trend), Volatility (Low/Med/High), Signal Tags (e.g., "Communication", "Finance"), and One-line Advice.
