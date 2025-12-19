@@ -90,19 +90,19 @@ export default function HistoryPage() {
         .sort((a, b) => a.name.localeCompare(b.name));
 
     return (
-        <div className="min-h-screen bg-transparent p-8 lg:p-12">
-            <div className="max-w-4xl mx-auto space-y-12">
+        <div className="min-h-screen bg-black p-4 md:p-8 lg:p-12">
+            <div className="max-w-4xl mx-auto space-y-8 md:space-y-12">
                 {/* Header & Search */}
-                <div className="sticky top-0 z-30 bg-gray-900/80 backdrop-blur-3xl py-6 -mx-8 px-8 rounded-b-[40px] border-b border-white/10 shadow-2xl">
-                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                        <h1 className="text-4xl font-serif font-bold text-white tracking-tight" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                <div className="sticky top-0 z-30 bg-black/80 backdrop-blur-3xl py-4 md:py-6 -mx-4 md:-mx-8 px-4 md:px-8 rounded-b-[32px] md:rounded-b-[40px] border-b border-white/10 shadow-2xl">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6">
+                        <h1 className="text-3xl md:text-4xl font-serif font-bold text-white tracking-tight" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                             Cosmic History
                         </h1>
                         <div className="relative group w-full md:w-96">
                             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 group-focus-within:text-teal-400 transition-colors" />
                             <input
                                 type="text"
-                                placeholder="Search subjects alphabetially..."
+                                placeholder="Search subjects alphabetically..."
                                 className="w-full bg-white/5 border border-white/10 rounded-2xl py-3 pl-12 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-teal-500/50 transition-all font-mono text-sm"
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}

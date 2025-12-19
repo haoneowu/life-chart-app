@@ -35,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${cormorant.variable} ${spaceMono.variable} ${inter.variable} antialiased bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-900 via-[#000] to-[#050505] text-white relative min-h-screen`}
+        className={`${cormorant.variable} ${spaceMono.variable} ${inter.variable} antialiased bg-black text-white relative min-h-screen`}
         suppressHydrationWarning
       >
         <SidebarProvider>

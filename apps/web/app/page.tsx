@@ -268,10 +268,12 @@ export default function Home() {
         onGoToToday={handleGoToToday}
       />
 
-      {/* Header */}
-      <div className="z-10 w-full max-w-7xl items-center justify-between font-mono text-sm flex p-8 lg:p-12">
-        <div className="fixed left-0 top-0 flex w-full justify-center border-b border-white/10 bg-black/50 pb-6 pt-8 backdrop-blur-2xl lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-white/5 lg:p-4 opacity-50">
-          State: Beta 0.9
+      {/* Beta Badge */}
+      <div className="absolute top-6 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
+        <div className="px-3 py-1 rounded-full border border-white/10 bg-white/5 backdrop-blur-md">
+          <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-gray-500">
+            System Status: <span className="text-teal-500">v0.9.7 Beta</span>
+          </span>
         </div>
       </div>
 
@@ -469,74 +471,78 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* Chart Controls */}
-                  <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-4 lg:mb-8 relative z-30">
-                    {/* Pillar Selection */}
-                    <div className="flex items-center gap-1 p-1 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-md">
-                      {(['Overall', 'Career', 'Money', 'Relationships', 'Energy'] as const).map((p) => {
-                        const icons: Record<string, any> = {
-                          Overall: <Globe className="w-4 h-4" />,
-                          Career: <Briefcase className="w-4 h-4" />,
-                          Money: <Coins className="w-4 h-4" />,
-                          Relationships: <Heart className="w-4 h-4" />,
-                          Energy: <Zap className="w-4 h-4" />,
-                        };
-                        return (
-                          <button
-                            key={p}
-                            onClick={() => setPillar(p)}
-                            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 ${pillar === p
-                              ? 'bg-white text-black shadow-lg scale-105'
-                              : 'text-gray-400 hover:text-white hover:bg-white/5'
-                              }`}
-                          >
-                            {icons[p]}
-                            <span className="hidden lg:inline">{p}</span>
-                          </button>
-                        );
-                      })}
+                  <div className="sticky top-0 z-40 bg-black/80 backdrop-blur-md pb-4 pt-10 md:pt-4">
+                    {/* Chart Controls */}
+                    <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-4 lg:mb-8 relative z-30 overflow-x-auto no-scrollbar">
+                      {/* Pillar Selection */}
+                      <div className="flex items-center gap-1 p-1 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-md shrink-0">
+                        {(['Overall', 'Career', 'Money', 'Relationships', 'Energy'] as const).map((p) => {
+                          const icons: Record<string, any> = {
+                            Overall: <Globe className="w-4 h-4" />,
+                            Career: <Briefcase className="w-4 h-4" />,
+                            Money: <Coins className="w-4 h-4" />,
+                            Relationships: <Heart className="w-4 h-4" />,
+                            Energy: <Zap className="w-4 h-4" />,
+                          };
+                          return (
+                            <button
+                              key={p}
+                              onClick={() => setPillar(p)}
+                              className={`flex items-center gap-2 px-3 md:px-4 py-2 md:py-2.5 rounded-xl text-[10px] md:text-sm font-medium transition-all duration-300 ${pillar === p
+                                ? 'bg-white text-black shadow-lg scale-105'
+                                : 'text-gray-400 hover:text-white hover:bg-white/5'
+                                }`}
+                            >
+                              {icons[p]}
+                              <span className="hidden sm:inline">{p}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+
+                      <div className="flex items-center gap-2 md:ms-auto">
+                        {/* Timeframe Selection */}
+                        <div className="flex items-center gap-1 p-1 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-md">
+                          {(['Day', 'Month', 'Year'] as const).map((t) => (
+                            <button
+                              key={t}
+                              onClick={() => setTimeframe(t)}
+                              className={`px-4 md:px-6 py-2 md:py-2.5 rounded-xl text-[10px] md:text-sm font-bold transition-all duration-300 ${timeframe === t
+                                ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/20'
+                                : 'text-gray-400 hover:text-white hover:bg-white/5'
+                                }`}
+                            >
+                              {t}
+                            </button>
+                          ))}
+                        </div>
+
+                        {/* Chart Style Toggle */}
+                        <div className="flex items-center gap-1 p-1 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-md">
+                          {(['Area', 'Candle'] as const).map((s) => (
+                            <button
+                              key={s}
+                              onClick={() => setChartStyle(s)}
+                              className={`px-4 md:px-6 py-2 md:py-2.5 rounded-xl text-[10px] md:text-sm font-bold transition-all duration-300 ${chartStyle === s
+                                ? 'bg-white text-black shadow-md'
+                                : 'text-gray-400 hover:text-white hover:bg-white/5'
+                                }`}
+                            >
+                              {s}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
                     </div>
 
-                    {/* Timeframe Selection */}
-                    <div className="flex items-center gap-1 p-1 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-md">
-                      {(['Day', 'Month', 'Year'] as const).map((t) => (
-                        <button
-                          key={t}
-                          onClick={() => setTimeframe(t)}
-                          className={`px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 ${timeframe === t
-                            ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/20'
-                            : 'text-gray-400 hover:text-white hover:bg-white/5'
-                            }`}
-                        >
-                          {t}
-                        </button>
-                      ))}
+                    <div className="h-[300px] md:h-[500px] relative">
+                      <LifeChart
+                        data={data}
+                        onCandleClick={setSelectedCandle}
+                        style={chartStyle}
+                        selectedDate={selectedCandle?.date || selectedCandle?.time}
+                      />
                     </div>
-
-                    {/* Chart Style Toggle */}
-                    <div className="flex items-center gap-1 p-1 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-md">
-                      {(['Area', 'Candle'] as const).map((s) => (
-                        <button
-                          key={s}
-                          onClick={() => setChartStyle(s)}
-                          className={`px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 ${chartStyle === s
-                            ? 'bg-white text-black shadow-md'
-                            : 'text-gray-400 hover:text-white hover:bg-white/5'
-                            }`}
-                        >
-                          {s}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="relative">
-                    <LifeChart
-                      data={data}
-                      onCandleClick={setSelectedCandle}
-                      style={chartStyle}
-                      selectedDate={selectedCandle?.date || selectedCandle?.time}
-                    />
                   </div>
                 </div>
               </div>
