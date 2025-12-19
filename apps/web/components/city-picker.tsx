@@ -94,17 +94,18 @@ export function CityPicker({ onSelect, initialValue = '' }: CityPickerProps) {
                 {loading ? (
                     <Loader2 className="absolute right-2 h-4 w-4 text-gray-500 animate-spin top-1/2 -translate-y-1/2" />
                 ) : (
-                    <MapPin className="absolute left-0 h-4 w-4 text-gray-500 group-focus-within:text-white transition-colors top-1/2 -translate-y-1/2 hidden" />
+                    <MapPin className="absolute left-0 h-4 w-4 text-gray-500 group-focus-within:text-white transition-colors top-1/2 -translate-y-1/2" />
                 )}
                 <input
                     type="text"
-                    className="w-full bg-transparent border-none py-3 px-2 text-lg font-serif placeholder:text-gray-600 text-white focus:outline-none focus:ring-0"
+                    className="w-full bg-transparent border-none py-3 pl-6 pr-2 text-lg font-serif placeholder:text-gray-600 text-white focus:outline-none focus:ring-0"
                     placeholder="Search city..."
                     value={query}
                     onChange={handleInput}
+                    autoComplete="off"
                     onFocus={() => {
                         setIsOpen(true);
-                        if (results.length === 0 && query.length >= 2) fetchCities(query);
+                        if (query.length >= 2) fetchCities(query);
                     }}
                 />
             </div>

@@ -31,16 +31,8 @@ export function Starfield() {
                 interactivity: {
                     events: {
                         onHover: {
-                            enable: true,
+                            enable: false,
                             mode: "bubble",
-                        },
-                    },
-                    modes: {
-                        bubble: {
-                            distance: 250,
-                            duration: 2,
-                            size: 0,
-                            opacity: 0,
                         },
                     },
                 },

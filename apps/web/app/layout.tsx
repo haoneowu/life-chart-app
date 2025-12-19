@@ -24,10 +24,8 @@ export const metadata: Metadata = {
   description: "Momentum for your life",
 };
 
-import { Sidebar } from "@/components/sidebar";
-import { Starfield } from "@/components/starfield";
-
-// ... (previous imports)
+import { SidebarProvider } from "@/context/sidebar-context";
+import { LayoutWrapper } from "@/components/layout-wrapper";
 
 export default function RootLayout({
   children,
@@ -40,11 +38,9 @@ export default function RootLayout({
         className={`${cormorant.variable} ${spaceMono.variable} ${inter.variable} antialiased bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-900 via-[#000] to-[#050505] text-white relative min-h-screen`}
         suppressHydrationWarning
       >
-        <Starfield />
-        <Sidebar />
-        <div className="lg:pl-20 transition-all duration-300 min-h-screen relative z-10">
-          {children}
-        </div>
+        <SidebarProvider>
+          <LayoutWrapper>{children}</LayoutWrapper>
+        </SidebarProvider>
       </body>
     </html>
   );

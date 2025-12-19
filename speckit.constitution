@@ -35,3 +35,11 @@ This document establishes the core principles and standards for the Life Chart p
 *   **Asset Optimization**: Images and media must be optimized and lazy-loaded where appropriate.
 *   **Efficiency**: Minimize re-renders in frontend frameworks. Avoid blocking the main thread.
 *   **API Performance**: Backend endpoints should respect response time budgets (e.g., < 200ms for standard requests).
+## 5. Speckit Management
+
+*   **Granular Requirements update**: For every new requirement or feature request, corresponding updates must be made across `speckit.tasks`, `speckit.specify`, and `speckit.plan`. Tasks must include precise Acceptance Criteria (AC) and link to any relevant detailed documentation (e.g. `docs/Detail Panel.md`).
+*   **Feedback & Revision Loop**: If a task fails verification or requirements change:
+    *   If previously marked complete (`[x]`), it must be unchecked (`[ ]`).
+    *   Acceptance Criteria must be refined to reflect the new feedback or change.
+    *   Referenced documentation must be updated to align with the revision.
+    *   All such modifications must be clearly communicated to the USER.

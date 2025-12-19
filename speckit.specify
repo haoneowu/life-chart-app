@@ -6,23 +6,59 @@
 
 ## 2. Core Features (User Stories)
 - **Input (Onboarding)**:
-    - **Fields**: Name (Required), Gender (Optional), Birth Date (Required), Birth Hour/Minute (Required), Birth Place (City Search).
-    - **Visuals**: "Starfield" background (Particles.js, constellations floating).
-    - **UI**: 50/50 Horizontal Split layout on desktop. Hero button with high-energy animated gradients.
+    - **Fields**: Name (Required), Gender (Required, stylized dropdown), Birth Date (Required), Birth Hour/Minute (Required), Birth Place (City Search).
+    - **Visuals**: "Starfield" background (static drift, no mouse interaction).
+    - **CTA**: Multi-stop linear gradient (Teal -> Red). Speed: 1/3 of default. Direction: One-way flow.
+    - **UI**: 50/50 Horizontal Split layout on desktop. Vertical Stack on mobile (< 720px). Reduced hero title size (2/3).
+    - **Responsive Optimization**: Mobile-first layout with optimized touch targets. Form fields stack vertically with full-width width targets.
+    - **Auth Guard**: Unauthenticated interaction with CTA, History, or Edit triggers Login.
     - System converts location to Lat/Lon/Timezone.
-- **Life Candles Chart (Main View)**:
-    - **Header**: Identity section with Zodiac Avatar (PNG), Name, Birth Date/Time/Place. Collapsible planetary details.
-    - **Chart Area**:
-        - **Visual**: Financial candlestick chart (Green/Red), TradingView logo hidden.
-        - **Y-Axis**: Momentum Score (0-100).
-        - **X-Axis**: Time (Day/Month/Year).
-        - **Interactions**: Scroll/Drag, Click to open panel, Back to Today button.
-        - **Pillars**: Unified toggle for 5 Life Pillars (Overall, Career, Money, Relationships, Energy).
-    - **Interpretation (Detail View)**:
-    - Click a candle to see: "Why" (Influences), "What" (Themes), "When" (Windows), and "How" (Advice).
-    - Interpretation text using structured narrative logic.
-- **Sharing (Viral Loop)**:
-    - "Share Today's Candle" generates a shareable image/card with the chart and interpretation.
+- **Life Trends Chart (Main View)**:
+    - **Landing State**: Default to `timeframe=Month`, `pillar=Overall`, `style=Area`.
+        - `selectedPoint` = `thisMonth` (fallback to `maxMonth` if `now > birth+100Y`).
+        - Selection: Select the point and open the right-hand panel by default.
+    - **Style Range**:
+        - **Area** (Default): Main view for all users.
+        - **Candle** (Advanced): Available via toggle.
+        - **Note**: Line style is removed from public selection.
+    - **Chart Scaling (0–100%)**:
+        - Y-axis is **STRICTLY FIXED** to 0.0% – 100.0%. Hide values outside this range.
+        - Enforcement: Backend normalization + Frontend score clamping `min(100, max(0, score))`.
+        - Visuals: Permanent Corner label "MOMENTUM SCORE" and `?` icon tooltip.
+    - **Chart UX**: 
+        - Bar spacing: High readability (e.g. 24px+).
+        - Selection: Full-height `#444444` background bar + White dot with stroke on the data point.
+        - Future Data: 90% transparency for data points > `now()`.
+    - **TradingView**: 100% removal via supported configuration (not CSS hacks); no branding visible anywhere in DOM.
+    - **Mobile Sticky**: Chart remains sticky at top on mobile scroll. Header collapses to compact form.
+    - **Mobile Viewport (< 720px)**: Chart height reduced to ~300px to allow visible list/panel area below.
+    - **Detail Panel (Mobile)**: Slide-in from bottom covering 60-80% of screen height. Swipe down to close.
+    - **Navigation (Mobile)**: Primary navigation moved to a **Bottom Tab Bar** (Home, History, Profile) to maximize reachability.
+    - **Sidebar (Mobile)**: Permanently hidden on mobile; functionality absorbed by Bottom Tab Bar.
+    - **Interpretation (Detail Panel)**:
+        - **Content**: Pillar-specific JSON structure following `Detail Panel.md`.
+        - **Categories**: Why (Key Drivers), What (Themes), How (Advice: Work, Money, Relationship, Health).
+        - **Caching**: Key = `${user_id}:${algo_version}:${timeframe}:${pillar}:${anchor_id}`.
+        - **Navigation**: Sticky header with "Back to Anchor" button (e.g., "Back to This Month").
+- **Sidebar & Navigation**:
+    - Logo + Text left-aligned in expanded state (aligned with nav items).
+    - Logo icon stays visible in top area when collapsed (centered in 80px).
+    - **Detail Page Layout**: Sidebar hidden. Top-left "Home" button for navigation.
+    - Remove "Edit" nav item globally.
+- **Authentication**:
+    - **Methods**: Google OAuth (Primary - colorful icon), Email/Password (Secondary).
+    - **Provider**: Supabase Auth.
+    - **Persistence**: User session persists in Sidebar profile.
+- **History Module**:
+    - **Feature**: Alphabetic list of saved subjects.
+    - **UI**: Sticky search bar, Entries with Zodiac, info vs Sparkline thumb + Today score.
+- **Layout**: Nav | Main | Panel (tight 3-column desktop layout). Nav sticky left, Panel sticky right.
+- **Global Polish**:
+    - **Zero-Flash Black**: Page background strictly forced to `#000000` (Pure Black). No white flashes between segment or page loads.
+    - **Playful Loader**: Custom-designed landing/loading state:
+        - **Visual**: Rotating cosmic rings or abstract momentum bars.
+        - **Interaction**: Emerges smoothly on page change or data fetching.
+        - **Tone**: Professional yet enchanting ("Calculating your destiny in real-time").
 
 ## 3. Data Model (Schema)
 

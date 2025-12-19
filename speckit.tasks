@@ -1,145 +1,185 @@
 # Speckit: Tasks
 
-## Setup
-- [x] Initialize Git Monorepo: `apps/web` (Next.js) and `apps/api` (Node.js).
-- [x] Install dependencies: `astronomy-engine`, `lightweight-charts`, `framer-motion`, `lucide-react`, `clsx`, `tailwind-merge`.
-- [x] Configure `apps/api`: Setup Express or Fastify server.
-- [x] Configure Supabase: Create project and get credentials.
+## 1. Setup
+- 1.1 [x] Initialize Git Monorepo
+    - AC: `apps/web` and `apps/api` folders created with standard Next.js/Node structures.
+- 1.2 [x] Install dependencies
+    - AC: `npm list` confirms `lightweight-charts`, `framer-motion`, `astronomy-engine` etc. are present.
+- 1.3 [x] Configure `apps/api`
+    - AC: Express/Fastify server starts on local port and responds to a test route.
+- 1.4 [x] Configure Supabase
+    - AC: `.env` contains valid `SUPABASE_URL` and `SUPABASE_ANON_KEY`.
 
-## Backend (Calculation Engine)
-- [x] Create `apps/api/src/engine/astronomy.ts`: Wrapper for `astronomy-engine`.
-- [x] Implement `calculateNatalChart(date, lat, lon)`: Returns planetary positions.
-- [x] Implement `calculateTransits(date)`: Returns daily planetary positions.
-- [x] Implement `calculateMomentum(natal, transits)`: Logic to compute 0-100 Score and Volatility.
-- [x] **Test**: Write unit tests for `calculateMomentum` to ensure deterministic output.
+## 2. Backend (Calculation Engine)
+- 2.1 [x] Create `astronomy.ts` wrapper
+    - AC: Module exports `getPlanetaryPositions` function.
+- 2.2 [x] Implement `calculateNatalChart`
+    - AC: Returns correct planetary coordinates for a known test date (e.g., Sun in Virgo for Sept 1st).
+- 2.3 [x] Implement `calculateTransits`
+    - AC: Returns accurate daily planetary positions for any given date range.
+- 2.4 [x] Implement `calculateMomentum`
+    - AC: Outputs a deterministic number between 0 and 100 based on aspects.
+- 2.5 [x] **Test**: Unit tests for Momentum
+    - AC: `npm test` runs and passes all 10+ test cases for scoring logic.
 
-## Database
-- [ ] SQL: Create `public.users` table with `latitude`, `longitude`, `timezone`.
-- [ ] SQL: Create `public.daily_signals` table (Composite key: user_id + date).
-- [ ] SQL: Create `public.interpretations` table.
+## 3. Database
+- 3.1 [x] SQL: `public.users` table
+    - AC: Table exists in Supabase with `birth_date`, `lat`, `lon` columns.
+- 3.2 [x] SQL: `public.daily_signals` table
+    - AC: Table supports composite key on `user_id` + `date`.
+- 3.3 [x] SQL: `public.interpretations` table
+    - AC: Table can store JSONB content linked to signals.
 
-## Frontend (Chart & UI)
-- [x] Component `LifeChart`: Initialize `lightweight-charts` instance.
-- [x] Helper `transformToCandles(signals)`: Convert Momentum Score -> OHLC data (Open/High/Low/Close simulation).
-- [x] **Chart Interactions**: Handle clicks on candles -> Show Detail Panel (Slide-over/Modal).
-- [x] Component `TimeframeSelector`: Toggle Day/Month/Year.
-- [x] **Revamp**: `OnboardingForm`:
-    - [x] Add `Name` and `Gender` inputs.
-    - [x] Replace Lat/Lon input with "City Search" (Autocomplete).
-    - [x] Split into styled steps or a clean single-page view.
-    - [x] Add entry animations.
+## 4. Frontend (Chart & UI)
+- 4.1 [x] Component `LifeChart` initialization
+    - AC: Technical chart renders in a `div` with correct dark theme colors.
+- 4.2 [x] Helper `transformToCandles`
+    - AC: Raw score data is mapped to `time`, `open`, `high`, `low`, `close` structure.
+- 4.3 [x] **Chart Interactions**
+    - AC: `onCandleClick` callback triggers and passes data to the parent component.
+- 4.4 [x] Component `TimeframeSelector`
+    - AC: Three buttons (Day/Month/Year) exist and toggle a state variable.
+- 4.5 [x] **Revamp**: `OnboardingForm`
+    - 4.5.1 [x] Add `Name` and `Gender` inputs
+        - AC: Both fields are `required` and accept user input.
+    - 4.5.2 [x] Replace Lat/Lon with "City Search"
+        - AC: User types "London", clicks a suggestion, and `lat`/`lon` are set.
 
-## Onboarding Refinements (User Feedback)
-- [x] **Main Button**: Update gradient to Teal/Red/Orange (Aurora style) per reference.
-- [x] **Subtitle**: Remove background box (clean text).
-- [x] **Background**: Speed up particles (1.2-1.5x) and change bg to subtle deep gradient (not pure black).
-- [x] **Layout**: Stack inputs in a single column (`grid-cols-1`).
-- [x] **Refinement Round 2**:
-    - [x] **Fix**: `CityPicker` dropdown z-index issue (Force `z-50` on picker container, `z-0` on button).
-    - [x] **Button**: Animate gradient (background-size: 200%, animation: pan).
-    - [x] **Layout**: Change Input Box style to **Inline/Horizontal** (Label Left | Input Right).
-    - [x] **Starfield**: Increase particle opacity (0.3 -> 0.8) and line opacity (0.3).
+## 5. Onboarding Refinements
+- 5.1 [x] **Main Button**: Teal/Red/Orange gradient
+    - AC: Button background uses a multi-stop linear gradient matching the prompt.
+- 5.2 [x] **Subtitle**: Clean text (no box)
+    - AC: Subtitle text has no background contrasting color.
+- 5.3 [x] **Background**: Speed up particles
+    - AC: `ParticlesBackground` config shows `speed` value increased by ~1.5x.
 
-## Refinement Round 4 (User Feedback & bugs)
-- [x] **Global / Bug Fixes**:
-    - [x] **Hydration Error**: Fix `className` mismatch in `CityPicker` input.
-    - [x] **Runtime Crash**: Fix `toFixed` error in `DetailPanel` (undefined check).
-- [x] **Onboarding**:
-    - [x] **Styles**: Fix alignment of Gender/Date dropdowns. Change Date icon color to white.
-    - [x] **CityPicker Logic**: Search should only prompt on input (no default list). Search logic should be fuzzy/better (pinyin support if possible, or just strict matches on input). Hide coordinates.
-- [x] **Navigation (Sidebar)**:
-    - [x] **Assets**: Use `logo.png` (from provided image) for Logo/Favicon.
-    - [x] **Structure**: Remove top-level Settings/Account. Fold into User Profile popover at bottom.
-    - [x] **User Menu**: Add "Language" option in the new User Profile menu.
-    - [x] **Styles**: Center the selected icon. Use `#444444` for active state background (dimmer than white).
-    - [x] **Collapsed**: Ensure Logo Icon is visible when collapsed.
-- [x] **Chart Detail Page**:
-    - [x] **Default State**: Open "Day Detail" (selected day) by default upon entry (select "Today" if new).
-    - [x] **Visuals**: Replace Zodiac icons with style matching reference (use simple bold SVGs or sprite if possible).
-    - [x] **Cleanup**: Hide TradingView logo (via CSS or config).
-    - [x] **Controls**: Segmented control Day/Month/Year (default Day).
+## 14. Refinement Round 8 (Final Polish & Auth)
 
-## Refinement Round 5 (Final MVP)
-- [x] **Onboarding (Input Page)**:
-    - [x] **Layout**: Refactor to LG Horizontal Split (Label Left | Input Right) on desktop.
-    - [x] **Inputs**: Add "Birth Hour" and "Birth Minute" (HH:MM) precision.
-    - [x] **Assets**: Replace logo with `logo.svg`.
-- [x] **Navigation (Sidebar)**:
-    - [x] **Logo**: Update Sidebar logo and favicon with `logo.svg`.
-- [x] **Chart Detail Page (Header)**:
-    - [x] **Collapse**: Default planetary details to collapsed.
-    - [x] **Identity**: Replace planetary summary with User Birth Info (Time, Place).
-    - [x] **Cleanup**: Remove "Momentum: Active" text.
-    - [x] **Icons**: Replace all Zodiac icons with provided individual PNG assets.
-- [x] **Advanced Charting (K-Line)**:
-    - [x] **Clean Up**: Implementation of CSS hack to hide TradingView logo.
-    - [x] **Interactivity**: Enable historical dragging and ensure smooth scaling.
-    - [x] **Selection**: Ensure a candle is selected on landing; persistent selection state.
-    - [x] **Timeframes**: Remove 'Week', implement 'Day', 'Month', 'Year'.
-    - [x] **Pillars**: Wire up the 5 Life Pillars (Overall, Career, Money, Relationships, Energy). 
-    - [x] **State Machine**: Implement selection logic and panel persistence when switching timeframes.
-- [x] **Detail Panel (Right Side)**:
-    - [x] **Typography**: Change body text to Sans-Serif (Inter), increase size to 1.125rem+.
-    - [x] **Navigation**: Add Forward/Backward arrows for sequence browsing.
-    - [x] **Structure**: Restructured into Why, What, When, How categories.
-- [x] **Backend & Logic**:
-    - [x] **Key Date**: Define deterministic logic for Next Key Date flagging.
-    - [x] **Pillars**: Update API to provide variation data (weighted planetary scores) for the 5 Pillars.
-    - [x] **Time Windows**: Implement semantic time windows (Morning/Afternoon/Evening) for interpretation.
+### 14.1 K-Line & Chart Constraints
+- 14.1.1 [x] **Hard Time Range Boundaries**
+  - AC: Chart time range restricted to `[birthMonth, birthMonth + 1200 months - 1]`.
+  - AC: Dragging/Panning stops at boundaries; no blank grid or infinite sliding.
+- 14.1.2 [x] **Landing Defaults & Selection**
+  - AC: Landing state is `timeframe=Month`, `pillar=Overall`, `style=Area`.
+  - AC: Selected point is `nowMonth` if within range, else `maxMonth`.
+  - AC: Right detail panel is open on landing, displaying content for the selected point.
+- 14.1.3 [x] **Y-Axis Enforcement**
+  - AC: Y-axis fixed at 0-100 (autoscale false, no exceptions).
+  - AC: Backend and Frontend scores are clamped to `[0, 100]`.
+  - AC: Corner Label `Momentum Score (0-100)` and `?` tooltip explaining the score are visible.
+- 14.1.4 [x] **100% TradingView Branding Removal**
+  - AC: No TV logo, links, or attribution (using official `lightweight-charts` options).
+  - AC: DOM search for "tradingview" returns empty.
+- 14.1.5 [x] **Pan/Selection Linkage**
+  - AC: `selectedPoint` is never null. Panning off-selection selects the nearest visible point.
+  - AC: Sticky "Back to Current/Today" nav in panel header.
+- 14.1.6 [x] **Column Density Control**
+  - AC: Default bar spacing set to 8px to ensure consistent density.
+- 14.1.7 [x] **Selected Column Highlight**
+  - AC: The selected column/pillar has a distinct background highlight (color `#444`) to clearly indicate selection.
 
-## Refinement Round 3 (Visuals & Data)
-- [x] **Onboarding**:
-    - [x] **Button**: Remove outer glow/shadow to fix "strange light".
-    - [x] **CityPicker**: Default empty state (show no prompt), fix text prompt visibility when typing, add Country/State to search result.
-- [x] **Navigation (Sidebar)**:
-    - [x] Remove left black bar indicator for selected item.
-    - [x] **Layout**: Move Settings/User Profile to bottom (ChatGPT style) with Avatar expanded layout.
-- [x] **Chart Detail Page**:
-    - [x] **Auto-Expand**: Ensure K-Line chart opens with panel expanded by default.
-    - [x] **Identity**: Fix Name display (currently showing City). Add "User Brief" (3-4 lines of attributes).
-    - [x] **Planets**: Show ALL planets (Sun to Pluto, excluding asteroids if needed, but fill the list).
-    - [x] **Zodiac Icons**: Crop and use provided Zodiac SVG image for circular avatars.
-- [x] **Chart Area**:
-    - [x] **Clean Up**: Remove TradingView logo (if customizable/authorized) or hide.
-    - [x] **New Chart**: Move "New Chart" button to Sidebar (under logo).
-    - [x] **Timeframe**: Implement Day/Week/Month granularity switch.
+### 14.2 Right-hand Panel (Interpretation Contract)
+- 14.2.1 [x] **Pillar-Specific Content Structure**
+  - AC: Panel updates Why/What/How based on the active pillar (e.g., Venus focus for Relationships).
+- 14.2.2 [x] **JSON Response & Interpretation Engine**
+  - AC: `POST /api/panel` returns structured JSON matching user spec (Overview, Why drivers, How advice).
+- 14.2.3 [x] **Caching & Prefetching Logic**
+  - AC: Frontend cache key `${user_id}:${timeframe}:${pillar}:${anchor_id}:${algo_version}`.
+  - AC: Prefetching active for Current Pillar/Month on landing and pillar change.
 
-## Visuals & Immersion (Particles & Glass)
-- [x] **Background**: Create `ParticlesBackground` component (Canvas/react-particles).
-- [x] **Onboarding UI**:
-    - [x] Implement Glassmorphism panel (backdrop-blur, border gradients).
-    - [x] **Hero Button**: Add energy gradient animation (css keyframes).
-- [x] **Assets**: Add 12 Zodiac SVG icons to `components/icons/zodiac`.
+### 14.3 Navigation & Sidebar
+- 14.3.1 [x] **Logo Persistence & Alignment**
+  - AC: Logo icon visible/centered at `w-20` (collapsed).
+  - AC: Logo icon left-aligned with nav icons when expanded.
 
-## Advanced Charting (K-Line Page)
-- [x] **Backend**: Update `POST /chart` to return `{ chartData, natalDetails: { sun, moon, ... } }`.
-- [x] **Header**: Create `ChartHeader` component.
-    - [x] Display Name, Sun Sign, and Avatar.
-    - [x] Collapsible "Planetary Details" table.
-- [x] **Chart Controls**:
-    - [x] "Back to Today" floating button.
-    - [x] Timeframe Segmented Control (Day/Month/Year).
-- [x] **Detail Panel**:
-    - [x] Layout update: Header (Date/Score), Body (Advice), Footer (Share).
-    - [x] "Share Card" visual update.
+### 14.4 Authentication (Supabase)
+- 14.4.1 [x] **Google OAuth & Email Flow**
+  - AC: Full login session persistence with Sidebar profile updates.
 
-## Design & Experience Overhaul (Gemini.md)
-- [x] **Typography**: Install `Cormorant Garamond` (Display), `Space Mono` (Data), and `Inter` (Body). Apply "High Contrast" principle.
-- [x] **Layout**: Add "Fake" Left Sidebar (Branding, History, Settings) for demo purposes.
-- [ ] **Interactions**:
-    - [ ] Staggered Text Reveal on load.
-    - [ ] Magnetic Buttons or Custom Cursor effect.
-    - [ ] Smooth Chart Entry animation.
-- [ ] **Imagery**: Add high-quality background/accent images from Unsplash.
+### 14.5 DevOps
+- 14.5.1 [x] **Production Domain & Port 3000**
+  - AC: `life-chart.app` verified; local dev runs on `:3000`.
 
-## API Integration
-- [ ] **API Endpoint** `POST /chart`: Accepts `{ birth_data, range }`. Returns `[candles]`.
-- [ ] **API Endpoint** `GET /interpretation`: Accepts `{ signal_data }`. Checks cache -> Calls LLM -> Returns text.
+## 15. Refinement Round 9 (Final Polish, History & Auth Mastery)
 
-## Virality
-- [ ] Component `ShareCard`: Visual representation of "Today's Candle".
-- [ ] Function `generateShareImage()`: Export component as PNG.
+### 15.1 Input Page Mastery
+- 15.1.1 [x] **CTA Gradient Flow Optimization**
+  - AC: Teal -> Red gradient animation speed reduced to 1/3 of current speed.
+  - AC: Animation direction is one-way (starts at one end, flows to other, no reversal).
+- 15.1.2 [x] **Global Auth Guard**
+  - AC: Clicking "Unlock Your Chart" (unauthenticated), "History" nav, or "Edit" (unauthenticated) triggers the Login/Register modal.
+- 15.1.3 [x] **Sidebar Logo Mastery**
+  - AC: Logo icon + "Life Chart" text left-aligned with nav items when expanded.
+  - AC: Logo icon stays visible in the top area (centered in 80px) when sidebar is collapsed.
 
-## Deploy
-- [ ] Configure `railway.json` for `apps/api`.
-- [ ] Configure `vercel.json` for `apps/web`.
+### 15.2 Detail Page - Chart Excellence
+- 15.2.1 [x] **Readability Spacing**
+  - AC: Default bar spacing increased significantly (e.g., 20px-30px) to prevent crowding.
+- 15.2.2 [x] **Selection State UI**
+  - AC: Selected time/point has a deep gray (`#444444`) full-height background highlight bar.
+  - AC: Selected point on the line/area has a white dot with a distinct stroke to emphasize location.
+- 15.2.3 [x] **Y-Axis Precision**
+  - AC: Y-axis strictly shows `0.0%` to `100.0%`. Values <0 or >100 are hidden from the axis Scale.
+- 15.2.4 [x] **Permanent Labeling**
+  - AC: "MOMENTUM SCORE" label is permanently visible in the top right of the chart, not hover-triggered.
+- 15.2.5 [x] **Temporal Hierarchy (Future Transparency)**
+  - AC: Data points AFTER the current date (e.g., after Dec 18, 2025) have 90% transparency applied to the area/line/candle.
+- 15.2.6 [x] **Smart Default Selection**
+  - AC: Chart initialization selects the current month (Dec 2025) by default if it exists in the 100-year range.
+
+### 15.3 Detail Page - Layout Focus
+- 15.3.1 [x] **Sub-Page Immersion**
+  - AC: Sidebar is hidden in the Detail Page.
+  - AC: A "Home" (Back) button is added to the top-left corner for returning to the input page.
+- 15.3.2 [x] **Nav Cleaning**
+  - AC: "Edit" navigation item removed from both Sidebar and Detail views.
+
+### 15.4 Detail Panel (Interpretation Contract)
+- 15.4.1 [x] **Comprehensive Pillar Content**
+  - AC: Implementation of `docs/Detail Panel.md` structure.
+  - AC: "Why" section quotes specific drivers for each segment (Career, Money, etc.).
+  - AC: "How" advice categorized into Work, Money, Relationship, and Health.
+
+### 15.5 Authentication & Branding
+- 15.5.1 [x] **Colorful Google Auth**
+  - AC: Auth modal uses the official colorful Google logo/button as per the user's reference image.
+- 15.5.2 [x] **Supabase OAuth Integration**
+  - AC: Primary login flow uses the already configured Google OAuth in Supabase.
+
+### 15.6 History Module
+- 15.6.1 [x] **Alphabetic History List**
+  - AC: All saved input subjects listed alphabetically.
+- 15.6.2 [x] **Sticky Search**
+  - AC: Search input stays stuck at the top when scrolling through the history list.
+- 15.6.3 [x] **History Entry Richness**
+  - AC: Left Side: Zodiac icon, Name, Age, Birth Date, and Location.
+  - AC: Right Side: Sparkline (line trend thumbnail) + Today's momentum score.
+
+## 16. Refinement Round 10 (Responsive & Cosmic Polish)
+
+### 16.1 Responsive Architecture (< 720px)
+- 16.1.1 [ ] **Mobile Input Stack**
+  - AC: Input Page Hero and Form stack vertically on mobile.
+  - AC: Padding and font sizes adjusted for tight mobile viewports.
+- 16.1.2 [ ] **Bottom Tab Bar (Mobile Navigation)**
+  - AC: Sidebar hidden on devices < 720px.
+  - AC: Navigation (Home, History, Profile) implemented as a sticky Bottom Tab Bar.
+- 16.1.3 [ ] **Mobile Detail View Optimization**
+  - AC: Chart remains sticky at top with reduced height (~300px).
+  - AC: Detail Panel appears below the chart or as a drawer.
+
+### 16.2 Visual Foundation & Polish
+- 16.2.1 [ ] **Zero-Flash Black Background**
+  - AC: Global background strictly set to `#000000`. 
+  - AC: Transitions between pages/segments maintain black background (no white flashes).
+- 16.2.2 [ ] **Playful Cosmic Loader**
+  - AC: Enchanting loading state with rotating rings or momentum bars.
+  - AC: Displayed during page transitions and initial data load.
+
+### 16.3 Component Refinement
+- 16.3.1 [ ] **Mobile Detail Drawer**
+  - AC: Detail content on mobile uses a slide-up drawer (60-80% height).
+  - AC: Swipe-to-dismiss gesture supported.
+- 16.3.2 [ ] **Mobile Touch Optimization**
+  - AC: All buttons and inputs meet accessibility standards for touch (min 44px).
+  - AC: Chart selection area optimized for thumb interaction.

@@ -25,8 +25,8 @@ export function ZodiacIcon({ sign, className }: ZodiacIconProps) {
                 src={`/zodiac/${fileName}.png`}
                 alt={sign}
                 fill
-                className="object-contain invert"
-                sizes="(max-width: 768px) 40px, 64px"
+                className="object-cover"
+                sizes="(max-width: 768px) 80px, 80px"
             />
         </div>
     );

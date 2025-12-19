@@ -46,8 +46,46 @@
 - [ ] **Frontend**: Build "Candle Detail" modal (BottomSheet on mobile).
 - [ ] Implement caching for LLM responses to save costs.
 
-## Phase 5: Virality & Polish
-**Goal**: Optimize for sharing and launch.
-- [ ] **Frontend**: Create "Share Card" generator (Canvas or HTML-to-Image).
-- [ ] **UI**: Polish animations (Framer Motion) for "Cinematic" feel.
-- [ ] **Deploy**: Production deploy to Vercel and Railway.
+## Phase 7: Life Trend Architecture (The Final Architecture)
+**Goal**: Transition from "Financial Chart" to a "Stable Life Trend System".
+
+### 1. Default Landing & State Rules
+- **Monthly Default**: Landing MUST be `timeframe=Month`, `pillar=Overall`, `style=Area`.
+- **Anchor Selection**: Landing MUST select the current month and open the detail panel immediately.
+- **State Machine**: Implement strict transitions for Timeframe switching and selection persistence.
+
+### 2. Anchor + Expansion Data Model
+- **Anchor Layer (Stability)**:
+    - Pre-generate 100 years of Year and Month anchors for all 5 pillars.
+    - Cache in DB for instant retrieval (`GET /chart/anchors`).
+- **Expansion Layer (On-demand)**:
+    - Lazy generate Day data only when needed (`GET /chart/days?month=YYYY-MM`).
+    - **Hard Constraint**: `avg(day_scores) ≈ month_score`.
+    - Deterministic Seed: `user_id + pillar + YYYY-MM + algo_version`.
+
+### 3. Scaling & UI Refinement
+- **Fixed Y-Axis**: 0–100 fixed range for all pillars.
+- **Semantic Labeling**: Labeled "Momentum Score" with "?" info hover.
+- **Style Convergence**: Area (Default) and Candle (Advanced) only. Remove Line style from public UI.
+- **Panel Refocus**: Remove "When". Refocus on "Event Interpretation" (Why/What/How).
+
+### 4. Layout & Mobile Polish
+- **Desktop 3-Column**: Nav | Main | Panel (tight 3-column layout).
+- **Mobile Sticky**: Chart remains sticky at top on mobile scroll.
+- **Identity Expansion**: Age calculation + Heroicons + 200-400 word narrative summary.
+
+## Phase 8: Final Polish, History & Auth Mastery
+**Goal**: Finalize UX, history persistent, and premium Auth.
+- [ ] **Input Page**: Fine-tune CTA gradients (Speed 1/3, One-way) and Sidebar alignment.
+- [ ] **Chart UX**: High-spacing density, `#444` selection bar, white stroke dot, 0-100% hard axis.
+- [ ] **Temporal Layer**: Future data transparency (90%) and default current-month selection.
+- [ ] **Layout**: Sub-page immersion for Detail (Hide sidebar, top-left Home button).
+- [ ] **Data Module**: "History" view with search, alphabetic sort, and sparkline thumbnails.
+- [ ] **Branding**: Colorful Google Sign-in and full Supabase OAuth integration.
+
+## Phase 9: Responsive Optimization & Cosmic Polish
+**Goal**: Mastery of mobile UX and elimination of visual friction.
+- [ ] **Mobile Layout (< 720px)**: Vertical stack for Input, Bottom Tab Bar for Navigation.
+- [ ] **Mobile Chart UX**: Optimized height (~300px), bottom-up Detail Panel (60-80% height).
+- [ ] **Zero-Flash Foundation**: Force black background globally; implement playful Page Loader.
+- [ ] **Responsive Refinement**: Form touch targets, font scaling, and sidebar-to-bottom-bar transition.

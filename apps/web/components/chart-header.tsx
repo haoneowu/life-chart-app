@@ -1,14 +1,12 @@
-'use client';
-
 import { useState } from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp, MapPin, Sun, Clock, User } from 'lucide-react';
 import { ZodiacIcon } from './zodiac-icon';
 
 interface PlanetaryPosition {
-    planet: string; // Sun, Moon, etc.
-    sign: string;   // Aries, etc.
-    degree: string; // 18°10'
-    house: number;  // 1-12
+    planet: string;
+    sign: string;
+    degree: string;
+    house: number;
     retrograde?: boolean;
 }
 
@@ -25,35 +23,59 @@ interface ChartHeaderProps {
 export function ChartHeader({ name, sunSign, planets, userBrief, birthDate, birthTime, birthCity }: ChartHeaderProps) {
     const [expanded, setExpanded] = useState(false);
 
+    // Calculate Age
+    const calculateAge = (dob: string) => {
+        const birthDate = new Date(dob);
+        const difference = Date.now() - birthDate.getTime();
+        const ageDate = new Date(difference);
+        return Math.abs(ageDate.getUTCFullYear() - 1970);
+    };
+
+    const age = birthDate ? calculateAge(birthDate) : '??';
+
     return (
         <div className="w-full bg-white/5 border border-white/10 rounded-2xl overflow-hidden backdrop-blur-md transition-all duration-300">
             {/* Main Header (Always Visible) */}
-            <div className="p-6 flex items-center justify-between">
-                <div className="flex items-center gap-6">
-                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-orange-400 to-red-600 flex items-center justify-center border-2 border-white/20 shadow-lg shrink-0">
-                        <ZodiacIcon sign={sunSign} className="w-12 h-12" />
+            <div className="p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                <div className="flex items-center gap-5">
+                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#52C8BC] to-[#D84548] flex items-center justify-center border-2 border-white/20 shadow-lg shrink-0 overflow-hidden">
+                        <ZodiacIcon sign={sunSign} className="w-full h-full" />
                     </div>
                     <div>
-                        <h2 className="text-3xl font-serif font-bold text-white mb-1">{name}</h2>
-                        <div className="flex items-center gap-2 text-sm font-mono text-gray-400 uppercase tracking-widest mb-3">
-                            <span>Sun: {sunSign}</span>
-                            <span className="w-1 h-1 bg-gray-600 rounded-full" />
-                            <span>{birthCity}</span>
+                        <div className="flex items-center gap-3 mb-1">
+                            <h2 className="text-2xl font-serif font-bold text-white">{name}</h2>
+                            <span className="px-2 py-0.5 rounded bg-white/10 text-[10px] font-mono text-gray-400 uppercase tracking-tighter">Verified</span>
                         </div>
-                        {userBrief && (
-                            <p className="text-xl text-gray-200 font-sans font-light leading-relaxed max-w-2xl">
-                                {userBrief}
-                            </p>
-                        )}
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] font-mono text-gray-400 uppercase tracking-widest">
+                            <div className="flex items-center gap-1.5">
+                                <Sun className="w-3 h-3 text-[#52C8BC]" />
+                                <span>{sunSign}</span>
+                            </div>
+                            <div className="flex items-center gap-1.5">
+                                <User className="w-3 h-3 text-[#52C8BC]" />
+                                <span>Age {age}</span>
+                            </div>
+                            <div className="flex items-center gap-1.5">
+                                <MapPin className="w-3 h-3 text-[#52C8BC]" />
+                                <span>{birthCity}</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <button
-                    onClick={() => setExpanded(!expanded)}
-                    className="p-3 rounded-full hover:bg-white/10 transition-colors text-gray-400 hover:text-white"
-                >
-                    {expanded ? <ChevronUp className="w-6 h-6" /> : <ChevronDown className="w-6 h-6" />}
-                </button>
+                <div className="flex items-center gap-4 w-full md:w-auto border-t md:border-t-0 border-white/10 pt-4 md:pt-0">
+                    {userBrief && (
+                        <p className="text-sm text-gray-400 font-sans font-light leading-relaxed max-w-sm line-clamp-2 md:line-clamp-3">
+                            {userBrief}
+                        </p>
+                    )}
+                    <button
+                        onClick={() => setExpanded(!expanded)}
+                        className="p-2 rounded-lg hover:bg-white/10 transition-colors text-gray-500 hover:text-white shrink-0"
+                    >
+                        {expanded ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+                    </button>
+                </div>
             </div>
 
             {/* Collapsible Details */}
@@ -61,48 +83,41 @@ export function ChartHeader({ name, sunSign, planets, userBrief, birthDate, birt
                 className={`overflow-hidden transition-[max-height] duration-500 ease-in-out ${expanded ? 'max-h-[800px]' : 'max-h-0'
                     }`}
             >
-                <div className="p-8 pt-0 border-t border-white/10">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 pt-6">
+                <div className="p-6 pt-2 border-t border-white/10">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
                         {/* User Birth Info Section */}
-                        <div className="space-y-6">
-                            <h3 className="text-xs font-mono text-gray-500 uppercase tracking-widest">Birth Profile</h3>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div className="p-4 bg-white/5 rounded-xl border border-white/10">
-                                    <div className="text-[10px] text-gray-500 uppercase font-mono mb-1">Birth Date</div>
-                                    <div className="text-lg text-white font-serif">{birthDate}</div>
+                        <div className="space-y-4">
+                            <h3 className="text-[10px] font-mono text-gray-500 uppercase tracking-[0.2em]">Cosmic Origin</h3>
+                            <div className="grid grid-cols-2 gap-3">
+                                <div className="p-3 bg-white/5 rounded-lg border border-white/10">
+                                    <div className="flex items-center gap-1.5 text-[9px] text-gray-500 uppercase font-mono mb-1">
+                                        <Clock className="w-2.5 h-2.5" /> Date & Time
+                                    </div>
+                                    <div className="text-sm text-white font-serif">{birthDate} / {birthTime}</div>
                                 </div>
-                                <div className="p-4 bg-white/5 rounded-xl border border-white/10">
-                                    <div className="text-[10px] text-gray-500 uppercase font-mono mb-1">Birth Time</div>
-                                    <div className="text-lg text-white font-serif">{birthTime}</div>
-                                </div>
-                                <div className="p-4 bg-white/5 rounded-xl border border-white/10 sm:col-span-2">
-                                    <div className="text-[10px] text-gray-500 uppercase font-mono mb-1">Location</div>
-                                    <div className="text-lg text-white font-serif">{birthCity}</div>
+                                <div className="p-3 bg-white/5 rounded-lg border border-white/10">
+                                    <div className="flex items-center gap-1.5 text-[9px] text-gray-500 uppercase font-mono mb-1">
+                                        <MapPin className="w-2.5 h-2.5" /> Location
+                                    </div>
+                                    <div className="text-sm text-white font-serif truncate">{birthCity}</div>
                                 </div>
                             </div>
                         </div>
 
                         {/* Planetary Details */}
-                        <div className="space-y-6">
-                            <h3 className="text-xs font-mono text-gray-500 uppercase tracking-widest">Planetary Aspects</h3>
-                            <div className="max-h-[300px] overflow-y-auto custom-scrollbar">
-                                <table className="w-full text-left text-sm font-mono">
-                                    <thead>
-                                        <tr className="text-gray-500 border-b border-white/5">
-                                            <th className="py-3 font-normal uppercase tracking-wider">Planet</th>
-                                            <th className="py-3 font-normal uppercase tracking-wider">Sign</th>
-                                            <th className="py-3 font-normal uppercase tracking-wider text-right">Degree</th>
-                                        </tr>
-                                    </thead>
+                        <div className="space-y-4">
+                            <h3 className="text-[10px] font-mono text-gray-500 uppercase tracking-[0.2em]">Signature Data</h3>
+                            <div className="max-h-[160px] overflow-y-auto custom-scrollbar border border-white/10 rounded-lg bg-black/20">
+                                <table className="w-full text-left text-[11px] font-mono">
                                     <tbody className="divide-y divide-white/5">
                                         {planets.map((p, i) => (
-                                            <tr key={i} className="text-gray-300 hover:bg-white/5 transition-colors">
-                                                <td className="py-3 flex items-center gap-2">
-                                                    <span className="w-1.5 h-1.5 rounded-full bg-blue-400/50" />
+                                            <tr key={i} className="text-gray-400 hover:bg-white/5 transition-colors">
+                                                <td className="py-2.5 px-3 flex items-center gap-2">
+                                                    <div className="w-1 h-1 rounded-full bg-[#52C8BC]" />
                                                     {p.planet}
                                                 </td>
-                                                <td className="py-3">{p.sign}</td>
-                                                <td className="py-3 text-right text-gray-500">{p.degree}</td>
+                                                <td className="py-2.5 px-3 text-white">{p.sign}</td>
+                                                <td className="py-2.5 px-3 text-right text-gray-600">{p.degree}</td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -115,3 +130,4 @@ export function ChartHeader({ name, sunSign, planets, userBrief, birthDate, birt
         </div>
     );
 }
+
